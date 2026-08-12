@@ -1,7 +1,16 @@
+import java.util.Scanner;
+
 public class Atom {
     private final static String name = "Atom";
+    private final Scanner scanner;
 
-    private static void greet() {
+    public Atom() {
+        greet();
+        scanner = new Scanner(System.in);
+        readLine();
+    }
+
+    private void greet() {
         String greeting = String.format("~~~~~~~~~~~~~~~~~~~~~~~~~\n"
                 + "Hi! I'm %s~☆ ヽ(*・ω・)ﾉ\n"
                 + "~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -10,14 +19,27 @@ public class Atom {
         System.out.println(greeting);
     }
 
-    private static void bye() {
+    private void bye() {
         String bye = "~~~~~~~~~~~~~~~~~~~~~~~~~\n"
                 + "Bye bye! (￣▽￣)ノ\n"
                 + "~~~~~~~~~~~~~~~~~~~~~~~~~\n";
         System.out.println(bye);
     }
 
+    private void readLine() {
+        String line = scanner.nextLine();
+        if (line.equals("bye")) {
+            bye();
+            return;
+        }
+        String echo = "~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+                + line
+                + "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+        System.out.println(echo);
+        readLine();
+    }
+
     public static void main(String[] args) {
-        greet();
+        Atom atom = new Atom();
     }
 }
