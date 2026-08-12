@@ -1,12 +1,15 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Scanner;;
 
 public class Atom {
     private final static String name = "Atom";
     private final Scanner scanner;
+    private final ArrayList<String> tasks;
 
     public Atom() {
         greet();
         scanner = new Scanner(System.in);
+        tasks = new ArrayList<>();
         readLine();
     }
 
@@ -26,17 +29,34 @@ public class Atom {
         System.out.println(bye);
     }
 
+    private void list() {
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
+        int i = 1;
+        for (String s : tasks) {
+            System.out.println(i + ". " + s);
+            i++;
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    }
+
     private void readLine() {
         String line = scanner.nextLine();
-        if (line.equals("bye")) {
-            bye();
-            return;
+        switch (line) {
+            case "bye":
+                bye();
+                break;
+            case "list":
+                list();
+                readLine();
+                break;
+            default:
+                String echo = "~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+                        + line
+                        + "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                System.out.println(echo);
+                tasks.add(line);
+                readLine();
         }
-        String echo = "~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-                + line
-                + "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-        System.out.println(echo);
-        readLine();
     }
 
     public static void main(String[] args) {
