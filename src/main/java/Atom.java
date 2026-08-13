@@ -65,8 +65,6 @@ public class Atom {
         } else {
             return false;
         }
-
-        readLine();
         return true;
     }
 
@@ -82,6 +80,47 @@ public class Atom {
                 + tasks.get(number - 1));
     }
 
+    private boolean checkToDo(String s) {
+        return s.startsWith("todo ");
+    }
+
+    private void addToDo(String s) {
+        String description = s.substring(5).strip();
+        ToDo toDo = new ToDo(description);
+        addTask(toDo);
+    }
+
+    private boolean checkDeadline(String s) {
+        return s.startsWith("deadline ") && s.contains("/");
+    }
+
+    private void addDeadline(String s) {
+        String description = s.substring(9).strip();
+        String[] ss = description.split("/", 2);
+        Deadline deadline = new Deadline(ss[0].strip(), ss[1].strip());
+        addTask(deadline);
+    }
+
+    private boolean checkEvent(String s) {
+        return s.startsWith("event ")
+                && s.contains("/")
+                && s.indexOf("/") != s.lastIndexOf("/");
+    }
+
+    private void addEvent(String s) {
+        String description = s.substring(6).strip();
+        String[] ss = description.split("/", 3);
+        Event event = new Event(ss[0].strip(), ss[1].strip(), ss[2].strip());
+        addTask(event);
+    }
+
+    private void addTask(Task task) {
+        tasks.add(task);
+        printWrappedText("Alright! I've added this task:\n"
+                + task
+                + String.format("\nYou now have %d tasks in the list.", tasks.size()));
+    }
+
     private void readLine() {
         String line = scanner.nextLine().strip();
         switch (line) {
@@ -94,6 +133,21 @@ public class Atom {
                 break;
             default:
                 if (checkMarkTask(line)) {
+                    readLine();
+                    break;
+                } else if (checkToDo(line)) {
+                    addToDo(line);
+                    readLine();
+                    break;
+                }
+                else if (checkDeadline(line)) {
+                    addDeadline(line);
+                    readLine();
+                    break;
+                }
+                else if (checkEvent(line)) {
+                    addEvent(line);
+                    readLine();
                     break;
                 }
                 printWrappedText(line);
