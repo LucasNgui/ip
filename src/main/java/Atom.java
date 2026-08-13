@@ -15,30 +15,32 @@ public class Atom {
         readLine();
     }
 
+    private void printWrappedText(String text) {
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(text);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+
     private void greet() {
-        String greeting = String.format("~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-                + "Hi! I'm %s~☆ ヽ(*・ω・)ﾉ\n"
-                + "~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                name
-        );
-        System.out.println(greeting);
+        printWrappedText(String.format("Hi! I'm %s~☆ ヽ(*・ω・)ﾉ", name));
     }
 
     private void bye() {
-        String bye = "~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-                + "Bye bye! (￣▽￣)ノ\n"
-                + "~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-        System.out.println(bye);
+        printWrappedText("Bye bye! (￣▽￣)ノ");
     }
 
     private void list() {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
+        StringBuilder sb = new StringBuilder();
         int i = 1;
         for (Task s : tasks) {
-            System.out.println(i + ". " + s);
+            sb.append(i).append(". ").append(s).append("\n");
             i++;
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        // delete the last line break
+        if (!sb.isEmpty()) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        printWrappedText(sb.toString());
     }
 
     private boolean checkMarkTask(String s) {
@@ -70,18 +72,14 @@ public class Atom {
 
     private void markTask(int number) {
         tasks.get(number - 1).mark();
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Awesome! Marking this task as done");
-        System.out.println(tasks.get(number - 1));
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        printWrappedText("Awesome! Marking this task as done\n"
+                + tasks.get(number - 1));
     }
 
     private void unmarkTask(int number) {
         tasks.get(number - 1).unmark();
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Ok. Marking this task as undone");
-        System.out.println(tasks.get(number - 1));
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        printWrappedText("Ok. Marking this task as undone\n"
+                + tasks.get(number - 1));
     }
 
     private void readLine() {
@@ -98,10 +96,7 @@ public class Atom {
                 if (checkMarkTask(line)) {
                     break;
                 }
-                String echo = "~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-                        + line
-                        + "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-                System.out.println(echo);
+                printWrappedText(line);
                 tasks.add(new Task(line));
                 readLine();
         }
