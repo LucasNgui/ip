@@ -126,12 +126,21 @@ public class Atom {
                     list();
                     break;
                 case "mark":
-                    int markNumber = Integer.parseInt(args[0]);
-                    markTask(markNumber);
-                    break;
                 case "unmark":
-                    int unmarkNumber = Integer.parseInt(args[0]);
-                    unmarkTask(unmarkNumber);
+                    int idx;
+                    try {
+                        idx = Integer.parseInt(args[0]);
+                    } catch (NumberFormatException e) {
+                        throw new AtomInvalidTypeException(command);
+                    }
+                    if (idx < 1 || idx > tasks.size()) {
+                        throw new AtomTaskNotFoundException(idx);
+                    }
+                    if (command.equals("mark")) {
+                        markTask(idx);
+                    } else {
+                        unmarkTask(idx);
+                    }
                     break;
                 case "todo":
                     addToDo(args);
@@ -146,7 +155,7 @@ public class Atom {
                     break;
             }
             readLine();
-        } catch (AtomInvalidCommandException | AtomMismatchedArgumentsException e) {
+        } catch (AtomException e) {
             printWrappedText(e.getMessage());
             readLine();
         }
