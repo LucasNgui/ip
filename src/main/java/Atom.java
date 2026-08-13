@@ -83,7 +83,7 @@ public class Atom {
     }
 
     private void readLine() {
-        String line = scanner.nextLine();
+        String line = scanner.nextLine().strip();
         switch (line) {
             case "bye":
                 bye();
