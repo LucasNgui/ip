@@ -55,23 +55,18 @@ public class Atom {
                 + tasks.get(number - 1));
     }
 
-    private void addToDo(String s) {
-        String description = s.substring(5).strip();
-        ToDo toDo = new ToDo(description);
+    private void addToDo(String[] args) {
+        ToDo toDo = new ToDo(args[0].strip());
         addTask(toDo);
     }
 
-    private void addDeadline(String s) {
-        String description = s.substring(9).strip();
-        String[] ss = description.split("/", 2);
-        Deadline deadline = new Deadline(ss[0].strip(), ss[1].strip());
+    private void addDeadline(String[] args) {
+        Deadline deadline = new Deadline(args[0].strip(), args[1].strip());
         addTask(deadline);
     }
 
-    private void addEvent(String s) {
-        String description = s.substring(6).strip();
-        String[] ss = description.split("/", 3);
-        Event event = new Event(ss[0].strip(), ss[1].strip(), ss[2].strip());
+    private void addEvent(String[] args) {
+        Event event = new Event(args[0].strip(), args[1].strip(), args[2].strip());
         addTask(event);
     }
 
@@ -139,13 +134,13 @@ public class Atom {
                     unmarkTask(unmarkNumber);
                     break;
                 case "todo":
-                    addToDo(line);
+                    addToDo(args);
                     break;
                 case "deadline":
-                    addDeadline(line);
+                    addDeadline(args);
                     break;
                 case "event":
-                    addEvent(line);
+                    addEvent(args);
                     break;
                 default:
                     break;
