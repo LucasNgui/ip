@@ -43,31 +43,6 @@ public class Atom {
         printWrappedText(sb.toString());
     }
 
-    private boolean checkMarkTask(String s) {
-        // check if the string matches "mark %d" or "unmark %d"
-        int number;
-        String regex = "\\d+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(s);
-        if (!matcher.find()) {
-            return false;
-        }
-        number = Integer.parseInt(matcher.group());
-        if (number < 0 || number > tasks.size()) {
-            return false;
-        }
-
-        if (s.equals("mark " + number)) {
-            markTask(number);
-        }
-        else if (s.equals("unmark " + number)) {
-            unmarkTask(number);
-        } else {
-            return false;
-        }
-        return true;
-    }
-
     private void markTask(int number) {
         tasks.get(number - 1).mark();
         printWrappedText("Awesome! Marking this task as done\n"
@@ -80,18 +55,10 @@ public class Atom {
                 + tasks.get(number - 1));
     }
 
-    private boolean checkToDo(String s) {
-        return s.startsWith("todo ");
-    }
-
     private void addToDo(String s) {
         String description = s.substring(5).strip();
         ToDo toDo = new ToDo(description);
         addTask(toDo);
-    }
-
-    private boolean checkDeadline(String s) {
-        return s.startsWith("deadline ") && s.contains("/");
     }
 
     private void addDeadline(String s) {
@@ -99,12 +66,6 @@ public class Atom {
         String[] ss = description.split("/", 2);
         Deadline deadline = new Deadline(ss[0].strip(), ss[1].strip());
         addTask(deadline);
-    }
-
-    private boolean checkEvent(String s) {
-        return s.startsWith("event ")
-                && s.contains("/")
-                && s.indexOf("/") != s.lastIndexOf("/");
     }
 
     private void addEvent(String s) {
@@ -123,37 +84,56 @@ public class Atom {
 
     private void readLine() {
         String line = scanner.nextLine().strip();
-        switch (line) {
+        String[] split = line.split("\\s+", 2);
+        String command = split[0];
+        String[] args = new String[0];
+        if (split.length > 1) {
+            args = split[1].trim().split(" /");
+        }
+        switch (command) {
             case "bye":
-                bye();
+                if (args.length == 0) {
+                    bye();
+                    return;
+                }
                 break;
             case "list":
-                list();
-                readLine();
+                if (args.length == 0) {
+                    list();
+                    readLine();
+                }
+                break;
+            case "mark":
+                if (args.length == 1) {
+                    int number = Integer.parseInt(args[0]);
+                    markTask(number);
+                }
+                break;
+            case "unmark":
+                if (args.length == 1) {
+                    int number = Integer.parseInt(args[0]);
+                    unmarkTask(number);
+                }
+                break;
+            case "todo":
+                if (args.length == 1) {
+                    addToDo(line);
+                }
+                break;
+            case "deadline":
+                if (args.length == 2) {
+                    addDeadline(line);
+                }
+                break;
+            case "event":
+                if (args.length == 3) {
+                    addEvent(line);
+                }
                 break;
             default:
-                if (checkMarkTask(line)) {
-                    readLine();
-                    break;
-                } else if (checkToDo(line)) {
-                    addToDo(line);
-                    readLine();
-                    break;
-                }
-                else if (checkDeadline(line)) {
-                    addDeadline(line);
-                    readLine();
-                    break;
-                }
-                else if (checkEvent(line)) {
-                    addEvent(line);
-                    readLine();
-                    break;
-                }
-                printWrappedText(line);
-                tasks.add(new Task(line));
-                readLine();
+                break;
         }
+        readLine();
     }
 
     public static void main(String[] args) {
