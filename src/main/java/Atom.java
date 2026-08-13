@@ -6,6 +6,17 @@ public class Atom {
     private final Scanner scanner;
     private final ArrayList<Task> tasks;
 
+    public enum Command {
+        BYE,
+        LIST,
+        MARK,
+        UNMARK,
+        TODO,
+        DEADLINE,
+        EVENT,
+        DELETE
+    }
+
     public Atom() {
         greet();
         scanner = new Scanner(System.in);
@@ -83,33 +94,37 @@ public class Atom {
     }
 
     private void checkCommand(String command, int argsNum) {
-        switch (command) {
-            case "bye":
-            case "list":
-                if (argsNum != 0) {
-                    throw new AtomMismatchedArgumentsException(command, 0, argsNum);
-                }
-                break;
-            case "mark":
-            case "unmark":
-            case "delete":
-            case "todo":
-                if (argsNum != 1) {
-                    throw new AtomMismatchedArgumentsException(command, 1, argsNum);
-                }
-                break;
-            case "deadline":
-                if (argsNum != 2) {
-                    throw new AtomMismatchedArgumentsException(command, 2, argsNum);
-                }
-                break;
-            case "event":
-                if (argsNum != 3) {
-                    throw new AtomMismatchedArgumentsException(command, 3, argsNum);
-                }
-                break;
-            default:
-                throw new AtomInvalidCommandException();
+        try {
+            switch (Command.valueOf(command.toUpperCase())) {
+                case Command.BYE:
+                case Command.LIST:
+                    if (argsNum != 0) {
+                        throw new AtomMismatchedArgumentsException(command, 0, argsNum);
+                    }
+                    break;
+                case Command.MARK:
+                case Command.UNMARK:
+                case Command.DELETE:
+                case Command.TODO:
+                    if (argsNum != 1) {
+                        throw new AtomMismatchedArgumentsException(command, 1, argsNum);
+                    }
+                    break;
+                case Command.DEADLINE:
+                    if (argsNum != 2) {
+                        throw new AtomMismatchedArgumentsException(command, 2, argsNum);
+                    }
+                    break;
+                case Command.EVENT:
+                    if (argsNum != 3) {
+                        throw new AtomMismatchedArgumentsException(command, 3, argsNum);
+                    }
+                    break;
+                default:
+                    throw new AtomInvalidCommandException();
+            }
+        } catch (IllegalArgumentException e) {
+            throw new AtomInvalidCommandException();
         }
     }
 
@@ -124,16 +139,16 @@ public class Atom {
 
         try {
             checkCommand(command, args.length);
-            switch (command) {
-                case "bye":
+            switch (Command.valueOf(command.toUpperCase())) {
+                case Command.BYE:
                     bye();
                     return;
-                case "list":
+                case Command.LIST:
                     list();
                     break;
-                case "mark":
-                case "unmark":
-                case "delete":
+                case Command.MARK:
+                case Command.UNMARK:
+                case Command.DELETE:
                     int idx;
                     try {
                         idx = Integer.parseInt(args[0]);
@@ -151,13 +166,13 @@ public class Atom {
                         deleteTask(idx);
                     }
                     break;
-                case "todo":
+                case Command.TODO:
                     addToDo(args);
                     break;
-                case "deadline":
+                case Command.DEADLINE:
                     addDeadline(args);
                     break;
-                case "event":
+                case Command.EVENT:
                     addEvent(args);
                     break;
                 default:
