@@ -82,6 +82,36 @@ public class Atom {
                 + String.format("\nYou now have %d tasks in the list.", tasks.size()));
     }
 
+    private void checkCommand(String command, int argsNum) {
+        switch (command) {
+            case "bye":
+            case "list":
+                if (argsNum != 0) {
+                    throw new AtomMismatchedArgumentsException(command, 0, argsNum);
+                }
+                break;
+            case "mark":
+            case "unmark":
+            case "todo":
+                if (argsNum != 1) {
+                    throw new AtomMismatchedArgumentsException(command, 1, argsNum);
+                }
+                break;
+            case "deadline":
+                if (argsNum != 2) {
+                    throw new AtomMismatchedArgumentsException(command, 2, argsNum);
+                }
+                break;
+            case "event":
+                if (argsNum != 3) {
+                    throw new AtomMismatchedArgumentsException(command, 3, argsNum);
+                }
+                break;
+            default:
+                throw new AtomInvalidCommandException();
+        }
+    }
+
     private void readLine() {
         String line = scanner.nextLine().strip();
         String[] split = line.split("\\s+", 2);
@@ -90,49 +120,41 @@ public class Atom {
         if (split.length > 1) {
             args = split[1].trim().split(" /");
         }
-        switch (command) {
-            case "bye":
-                if (args.length == 0) {
+
+        try {
+            checkCommand(command, args.length);
+            switch (command) {
+                case "bye":
                     bye();
                     return;
-                }
-                break;
-            case "list":
-                if (args.length == 0) {
+                case "list":
                     list();
-                }
-                break;
-            case "mark":
-                if (args.length == 1) {
-                    int number = Integer.parseInt(args[0]);
-                    markTask(number);
-                }
-                break;
-            case "unmark":
-                if (args.length == 1) {
-                    int number = Integer.parseInt(args[0]);
-                    unmarkTask(number);
-                }
-                break;
-            case "todo":
-                if (args.length == 1) {
+                    break;
+                case "mark":
+                    int markNumber = Integer.parseInt(args[0]);
+                    markTask(markNumber);
+                    break;
+                case "unmark":
+                    int unmarkNumber = Integer.parseInt(args[0]);
+                    unmarkTask(unmarkNumber);
+                    break;
+                case "todo":
                     addToDo(line);
-                }
-                break;
-            case "deadline":
-                if (args.length == 2) {
+                    break;
+                case "deadline":
                     addDeadline(line);
-                }
-                break;
-            case "event":
-                if (args.length == 3) {
+                    break;
+                case "event":
                     addEvent(line);
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
+            readLine();
+        } catch (AtomInvalidCommandException | AtomMismatchedArgumentsException e) {
+            printWrappedText(e.getMessage());
+            readLine();
         }
-        readLine();
     }
 
     public static void main(String[] args) {
