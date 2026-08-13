@@ -77,6 +77,13 @@ public class Atom {
                 + String.format("\nYou now have %d tasks in the list.", tasks.size()));
     }
 
+    private void deleteTask(int idx) {
+        Task t = tasks.remove(idx - 1);
+        printWrappedText("Alright! I've removed this task:\n"
+                + t
+                + String.format("\nYou now have %d tasks in the list.", tasks.size()));
+    }
+
     private void checkCommand(String command, int argsNum) {
         switch (command) {
             case "bye":
@@ -87,6 +94,7 @@ public class Atom {
                 break;
             case "mark":
             case "unmark":
+            case "delete":
             case "todo":
                 if (argsNum != 1) {
                     throw new AtomMismatchedArgumentsException(command, 1, argsNum);
@@ -127,6 +135,7 @@ public class Atom {
                     break;
                 case "mark":
                 case "unmark":
+                case "delete":
                     int idx;
                     try {
                         idx = Integer.parseInt(args[0]);
@@ -138,8 +147,10 @@ public class Atom {
                     }
                     if (command.equals("mark")) {
                         markTask(idx);
-                    } else {
+                    } else if (command.equals("unmark")) {
                         unmarkTask(idx);
+                    } else {
+                        deleteTask(idx);
                     }
                     break;
                 case "todo":
