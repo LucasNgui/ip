@@ -100,7 +100,6 @@ public class Atom {
             case "list":
                 if (args.length == 0) {
                     list();
-                    readLine();
                 }
                 break;
             case "mark":
