@@ -1,10 +1,8 @@
-# Duke User Guide
-
-// Update the title above to match the actual product name
+# Atom User Guide
 
 // Product screenshot goes here
 
-// Product intro goes here
+Atom is a chatbot designed to help keep track of tasks.
 
 ## Adding deadlines
 
