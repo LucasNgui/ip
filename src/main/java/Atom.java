@@ -70,12 +70,21 @@ public class Atom {
     }
 
     private void addDeadline(String[] args) {
-        Deadline deadline = new Deadline(args[0].strip(), args[1].strip());
+        if (!args[1].startsWith("from ")) {
+            throw new AtomInvalidTypeException("deadline");
+        }
+        Deadline deadline = new Deadline(args[0].strip(),
+                args[1].substring(5).strip());
         addTask(deadline);
     }
 
     private void addEvent(String[] args) {
-        Event event = new Event(args[0].strip(), args[1].strip(), args[2].strip());
+        if (!args[1].startsWith("from ") || !args[2].startsWith("end ")) {
+            throw new AtomInvalidTypeException("event");
+        }
+        Event event = new Event(args[0].strip(),
+                args[1].substring(5).strip(),
+                args[2].substring(4).strip());
         addTask(event);
     }
 
