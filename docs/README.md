@@ -4,25 +4,96 @@
 
 Atom is a chatbot designed to help keep track of tasks.
 
+## Adding todos
+
+Add a task without a start or end time.
+
+Example: `todo borrow book`
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Alright! I've added this task:
+[D][ ] borrow book
+You now have 1 tasks in the list.
+~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
 ## Adding deadlines
 
-// Describe the action and its outcome.
+Add a task with only an end time.
 
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
+Example: `deadline return book /by Sunday`
 
 ```
-expected output
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Alright! I've added this task:
+[D][ ] return book (by: Sunday)
+You now have 2 tasks in the list.
+~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 
-## Feature ABC
+## Adding events
 
-// Feature details
+Add a task with both a start time and an end time.
 
+Example: `event project meeting /from Mon 2pm /to 4pm`
 
-## Feature XYZ
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Alright! I've added this task:
+[D][ ] project meeting (from: Mon 2pm to: 4pm)
+You now have 3 tasks in the list.
+~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
-// Feature details
+## Listing tasks
+
+List all tasks that have been added so far.
+
+Example: `list`
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+1. [T][ ] borrow book
+2. [D][ ] return book (by: Sunday)
+3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+``` 
+
+## Marking and unmarking tasks
+
+Mark a task as done or undone.
+
+Example: `mark 1`
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+1. [T][X] borrow book
+2. [D][ ] return book (by: Sunday)
+3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+``` 
+
+`unmark 1`
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+1. [T][ ] borrow book
+2. [D][ ] return book (by: Sunday)
+3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+## Deleting tasks
+
+Delete a task from the list.
+
+Example: `delete 2`
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Alright! I've removed this task:
+[D][ ] return book (by: Sunday)
+You now have 2 tasks in the list.
+~~~~~~~~~~~~~~~~~~~~~~~~~
+``` 
