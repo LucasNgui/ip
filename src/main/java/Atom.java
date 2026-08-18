@@ -80,6 +80,7 @@ public class Atom {
         Deadline deadline = new Deadline(args[0].strip(),
                 args[1].substring(3).strip());
         addTask(deadline);
+        args[1] = args[1].substring(3);
         storage.writeTask(Storage.TaskName.D, args);
     }
 
@@ -91,6 +92,8 @@ public class Atom {
                 args[1].substring(5).strip(),
                 args[2].substring(3).strip());
         addTask(event);
+        args[1] = args[1].substring(5);
+        args[2] = args[2].substring(3);
         storage.writeTask(Storage.TaskName.E, args);
     }
 
