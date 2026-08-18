@@ -73,7 +73,18 @@ public class Storage {
     }
 
     public void writeTask(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : args) {
+            sb.append(s).append(" /");
+        }
 
+        try {
+            FileWriter fw = new FileWriter(savePath);
+            fw.write(sb.toString());
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error in writing to save file.");
+        }
     }
 
     public void markTask(int taskIdx) {
