@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -44,21 +45,21 @@ public class Storage {
         while (s.hasNext()) {
             String[] line = s.nextLine().split(" /");
             switch (line[0]) {
-            case "todo":
+            case "T":
                 Task t = new ToDo(line[2]);
                 if (line[1].equals("1")) {
                     t.mark();
                 }
                 tasks.add(t);
                 break;
-            case "deadline":
+            case "D":
                 Task d = new Deadline(line[2], line[3]);
                 if (line[1].equals("1")) {
                     d.mark();
                 }
                 tasks.add(d);
                 break;
-            case "event":
+            case "E":
                 Task e = new Event(line[2], line[3], line[4]);
                 if (line[1].equals("1")) {
                     e.mark();
@@ -88,11 +89,37 @@ public class Storage {
     }
 
     public void markTask(int taskIdx) {
-
+        Path path = Paths.get(savePath);
+        try {
+            List<String> lines = Files.readAllLines(path);
+            if (taskIdx > 0 && taskIdx <= lines.size()) {
+                StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
+                markedTask.setCharAt(3, '1');
+                lines.set(taskIdx - 1, markedTask.toString());
+            } else {
+                throw new AtomTaskNotFoundException(taskIdx);
+            }
+            Files.write(path, lines);
+        } catch (IOException e) {
+            System.out.println("Error in writing to save file.");
+        }
     }
 
     public void unmarkTask(int taskIdx) {
-
+        Path path = Paths.get(savePath);
+        try {
+            List<String> lines = Files.readAllLines(path);
+            if (taskIdx > 0 && taskIdx <= lines.size()) {
+                StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
+                markedTask.setCharAt(3, '0');
+                lines.set(taskIdx - 1, markedTask.toString());
+            } else {
+                throw new AtomTaskNotFoundException(taskIdx);
+            }
+            Files.write(path, lines);
+        } catch (IOException e) {
+            System.out.println("Error in writing to save file.");
+        }
     }
 
     public void deleteTask(int taskIdx) {
