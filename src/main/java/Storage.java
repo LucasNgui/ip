@@ -8,8 +8,6 @@ import java.util.Scanner;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Storage {
     private final static String savePath = "./data/atom.txt";
@@ -123,6 +121,17 @@ public class Storage {
     }
 
     public void deleteTask(int taskIdx) {
-
+        Path path = Paths.get(savePath);
+        try {
+            List<String> lines = Files.readAllLines(path);
+            if (taskIdx >= 0 && taskIdx < lines.size()) {
+                lines.remove(taskIdx);
+                Files.write(path, lines);
+            } else {
+                throw new AtomTaskNotFoundException(taskIdx);
+            }
+        } catch (IOException e) {
+            System.out.println("Error in writing to save file.");
+        }
     }
 }
