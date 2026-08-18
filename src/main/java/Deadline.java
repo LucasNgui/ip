@@ -8,7 +8,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        String cross = isDone ? "X" : " ";
-        return String.format("[D][%s] %s (by: %s)", cross, description, deadline);
+        return String.format("[D]%s (by: %s)", super.toString(), deadline);
     }
 }
