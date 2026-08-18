@@ -5,7 +5,6 @@ public class ToDo extends Task {
 
     @Override
     public String toString() {
-        String cross = isDone ? "X" : " ";
-        return String.format("[T][%s] %s", cross, description);
+        return String.format("[T]%s", super.toString());
     }
 }
