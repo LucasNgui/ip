@@ -1,12 +1,17 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task {
     private final LocalDate deadline;
 
     public Deadline(String description, String deadline) {
         super(description);
-        this.deadline = LocalDate.parse(deadline);
+        try {
+            this.deadline = LocalDate.parse(deadline);
+        } catch (DateTimeParseException e) {
+            throw new AtomInvalidDateException();
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
     private final LocalDate startTime;
@@ -7,8 +8,12 @@ public class Event extends Task {
 
     public Event(String description, String startTime, String endTime) {
         super(description);
-        this.startTime = LocalDate.parse(startTime);
-        this.endTime = LocalDate.parse(endTime);
+        try {
+            this.startTime = LocalDate.parse(startTime);
+            this.endTime = LocalDate.parse(endTime);
+        } catch (DateTimeParseException e) {
+            throw new AtomInvalidDateException();
+        }
     }
 
     @Override
