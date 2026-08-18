@@ -5,6 +5,7 @@ public class Atom {
     private final static String name = "Atom";
     private final Scanner scanner;
     private final ArrayList<Task> tasks;
+    private final Storage storage = new Storage();
 
     public enum Command {
         BYE,
@@ -20,7 +21,7 @@ public class Atom {
     public Atom() {
         greet();
         scanner = new Scanner(System.in);
-        tasks = new ArrayList<>();
+        tasks = storage.load();
         readLine();
     }
 
@@ -52,21 +53,24 @@ public class Atom {
         printWrappedText(sb.toString());
     }
 
-    private void markTask(int number) {
-        tasks.get(number - 1).mark();
+    private void markTask(int idx) {
+        tasks.get(idx - 1).mark();
         printWrappedText("Awesome! Marking this task as done\n"
-                + tasks.get(number - 1));
+                + tasks.get(idx - 1));
+        storage.markTask(idx);
     }
 
-    private void unmarkTask(int number) {
-        tasks.get(number - 1).unmark();
+    private void unmarkTask(int idx) {
+        tasks.get(idx - 1).unmark();
         printWrappedText("Ok. Marking this task as undone\n"
-                + tasks.get(number - 1));
+                + tasks.get(idx - 1));
+        storage.unmarkTask(idx);
     }
 
     private void addToDo(String[] args) {
         ToDo toDo = new ToDo(args[0].strip());
         addTask(toDo);
+        storage.writeTask(Storage.TaskName.T, args);
     }
 
     private void addDeadline(String[] args) {
@@ -76,6 +80,7 @@ public class Atom {
         Deadline deadline = new Deadline(args[0].strip(),
                 args[1].substring(3).strip());
         addTask(deadline);
+        storage.writeTask(Storage.TaskName.D, args);
     }
 
     private void addEvent(String[] args) {
@@ -86,6 +91,7 @@ public class Atom {
                 args[1].substring(5).strip(),
                 args[2].substring(3).strip());
         addTask(event);
+        storage.writeTask(Storage.TaskName.E, args);
     }
 
     private void addTask(Task task) {
@@ -100,6 +106,7 @@ public class Atom {
         printWrappedText("Alright! I've removed this task:\n"
                 + t
                 + String.format("\nYou now have %d tasks in the list.", tasks.size()));
+        storage.deleteTask(idx);
     }
 
     private void checkCommand(String command, int argsNum) {
