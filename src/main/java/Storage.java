@@ -12,6 +12,10 @@ import java.nio.file.Paths;
 public class Storage {
     private final static String savePath = "./data/atom.txt";
 
+    public enum TaskName {
+        T, D, E
+    }
+
     public Storage() {
         // Checks if a save file exists and creates one if it does not.
         File file = new File(savePath);
@@ -28,9 +32,9 @@ public class Storage {
         }
     }
 
-    public List<Task> load() {
+    public ArrayList<Task> load() {
         File f = new File(savePath);
-        List<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner s;
 
         try {
@@ -42,22 +46,22 @@ public class Storage {
 
         while (s.hasNext()) {
             String[] line = s.nextLine().split(" /");
-            switch (line[0]) {
-            case "T":
+            switch (TaskName.valueOf(line[0])) {
+            case TaskName.T:
                 Task t = new ToDo(line[2]);
                 if (line[1].equals("1")) {
                     t.mark();
                 }
                 tasks.add(t);
                 break;
-            case "D":
+            case TaskName.D:
                 Task d = new Deadline(line[2], line[3]);
                 if (line[1].equals("1")) {
                     d.mark();
                 }
                 tasks.add(d);
                 break;
-            case "E":
+            case TaskName.E:
                 Task e = new Event(line[2], line[3], line[4]);
                 if (line[1].equals("1")) {
                     e.mark();
@@ -71,14 +75,16 @@ public class Storage {
         return tasks;
     }
 
-    public void writeTask(String[] args) {
-        StringBuilder sb = new StringBuilder();
+    public void writeTask(TaskName taskName, String[] args) {
+        StringBuilder sb = new StringBuilder(taskName.toString());
+        sb.append(" /0");
         for (String s : args) {
-            sb.append(s).append(" /");
+            sb.append(" /").append(s);
         }
+        sb.append("\n");
 
         try {
-            FileWriter fw = new FileWriter(savePath);
+            FileWriter fw = new FileWriter(savePath, true);
             fw.write(sb.toString());
             fw.close();
         } catch (IOException e) {
