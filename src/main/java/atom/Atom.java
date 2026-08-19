@@ -1,3 +1,12 @@
+package atom;
+
+import atom.exception.AtomException;
+import atom.exception.AtomTaskNotFoundException;
+import atom.parser.Parser;
+import atom.storage.Storage;
+import atom.task.*;
+import atom.ui.Ui;
+
 public class Atom {
     private final Storage storage;
     private final TaskList tasks;
