@@ -20,7 +20,12 @@ public class Parser {
     public Line readLine() throws AtomException {
         String line = scanner.nextLine().strip();
         String[] split = line.split("\\s+", 2);
-        Atom.Command command = Atom.Command.valueOf(split[0].toUpperCase());
+        Atom.Command command;
+        try {
+            command = Atom.Command.valueOf(split[0].toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new AtomInvalidCommandException();
+        }
         String[] args = new String[0];
         if (split.length > 1) {
             args = split[1].trim().split(" /");
