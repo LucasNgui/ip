@@ -1,11 +1,10 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Atom {
-    private final static String name = "Atom";
     private final Scanner scanner;
     private final Storage storage;
     private final TaskList tasks;
+    private final Ui ui;
 
     public enum Command {
         BYE,
@@ -19,42 +18,23 @@ public class Atom {
     }
 
     public Atom() {
-        greet();
         this.scanner = new Scanner(System.in);
         this.storage = new Storage();
         this.tasks = new TaskList(storage.load());
+        this.ui = new Ui();
+        ui.greet();
         readLine();
-    }
-
-    private void printWrappedText(String text) {
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println(text);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
-    }
-
-    private void greet() {
-        printWrappedText(String.format("Hi! I'm %s~☆ ヽ(*・ω・)ﾉ", name));
-    }
-
-    private void bye() {
-        printWrappedText("Bye bye! (￣▽￣)ノ");
-    }
-
-    private void list() {
-        printWrappedText(tasks.toString());
     }
 
     private void markTask(int idx) {
         tasks.mark(idx - 1);
-        printWrappedText("Awesome! Marking this task as done\n"
-                + tasks.get(idx - 1));
+        ui.mark(tasks.get(idx - 1));
         storage.markTask(idx);
     }
 
     private void unmarkTask(int idx) {
         tasks.unmark(idx - 1);
-        printWrappedText("Ok. Marking this task as undone\n"
-                + tasks.get(idx - 1));
+        ui.unmark(tasks.get(idx - 1));
         storage.unmarkTask(idx);
     }
 
@@ -90,16 +70,12 @@ public class Atom {
 
     private void addTask(Task task) {
         tasks.add(task);
-        printWrappedText("Alright! I've added this task:\n"
-                + task
-                + String.format("\nYou now have %d tasks in the list.", tasks.size()));
+        ui.add(task, tasks.size());
     }
 
     private void deleteTask(int idx) {
         Task t = tasks.remove(idx - 1);
-        printWrappedText("Alright! I've removed this task:\n"
-                + t
-                + String.format("\nYou now have %d tasks in the list.", tasks.size()));
+        ui.remove(t, tasks.size());
         storage.deleteTask(idx);
     }
 
@@ -151,10 +127,10 @@ public class Atom {
             checkCommand(command, args.length);
             switch (Command.valueOf(command.toUpperCase())) {
             case Command.BYE:
-                bye();
+                ui.bye();
                 return;
             case Command.LIST:
-                list();
+                ui.list(tasks.toString());
                 break;
             case Command.MARK:
             case Command.UNMARK:
@@ -190,7 +166,7 @@ public class Atom {
             }
             readLine();
         } catch (AtomException e) {
-            printWrappedText(e.getMessage());
+            ui.printError(e);
             readLine();
         }
     }
