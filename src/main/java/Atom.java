@@ -4,8 +4,8 @@ import java.util.Scanner;
 public class Atom {
     private final static String name = "Atom";
     private final Scanner scanner;
-    private final ArrayList<Task> tasks;
-    private final Storage storage = new Storage();
+    private final Storage storage;
+    private final TaskList tasks;
 
     public enum Command {
         BYE,
@@ -20,8 +20,9 @@ public class Atom {
 
     public Atom() {
         greet();
-        scanner = new Scanner(System.in);
-        tasks = storage.load();
+        this.scanner = new Scanner(System.in);
+        this.storage = new Storage();
+        this.tasks = new TaskList(storage.load());
         readLine();
     }
 
@@ -40,28 +41,18 @@ public class Atom {
     }
 
     private void list() {
-        StringBuilder sb = new StringBuilder();
-        int i = 1;
-        for (Task s : tasks) {
-            sb.append(i).append(". ").append(s).append("\n");
-            i++;
-        }
-        // delete the last line break
-        if (!sb.isEmpty()) {
-            sb.deleteCharAt(sb.length() - 1);
-        }
-        printWrappedText(sb.toString());
+        printWrappedText(tasks.toString());
     }
 
     private void markTask(int idx) {
-        tasks.get(idx - 1).mark();
+        tasks.mark(idx - 1);
         printWrappedText("Awesome! Marking this task as done\n"
                 + tasks.get(idx - 1));
         storage.markTask(idx);
     }
 
     private void unmarkTask(int idx) {
-        tasks.get(idx - 1).unmark();
+        tasks.unmark(idx - 1);
         printWrappedText("Ok. Marking this task as undone\n"
                 + tasks.get(idx - 1));
         storage.unmarkTask(idx);
