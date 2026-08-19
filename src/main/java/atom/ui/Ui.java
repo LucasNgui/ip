@@ -1,5 +1,10 @@
+package atom.ui;
+
+import atom.exception.AtomException;
+import atom.task.Task;
+
 public class Ui {
-    public static final String NAME = "Atom";
+    public static final String NAME = "atom";
 
     public void printWrappedText(String text) {
         String wrapper = "~~~~~~~~~~~~~~~~~~~~~~~~~";
