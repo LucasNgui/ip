@@ -90,11 +90,11 @@ public class Atom {
             return;
         }
 
-        String command = line.command();
+        Command command = line.command();
         String[] args = line.args();
 
         try {
-            switch (Command.valueOf(command)) {
+            switch (command) {
             case Command.BYE:
                 ui.bye();
                 return;
@@ -108,9 +108,9 @@ public class Atom {
                 if (idx < 1 || idx > tasks.size()) {
                     throw new AtomTaskNotFoundException(idx);
                 }
-                if (command.equals("MARK")) {
+                if (command.equals(Command.MARK)) {
                     markTask(idx);
-                } else if (command.equals("UNMARK")) {
+                } else if (command.equals(Command.UNMARK)) {
                     unmarkTask(idx);
                 } else {
                     deleteTask(idx);
