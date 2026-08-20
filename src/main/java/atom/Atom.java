@@ -120,19 +120,13 @@ public class Atom {
                 ui.list(tasks.toString());
                 break;
             case Command.MARK:
+                markTask(Integer.parseInt(args[0]));
+                break;
             case Command.UNMARK:
+                unmarkTask(Integer.parseInt(args[0]));
+                break;
             case Command.DELETE:
-                int idx = Integer.parseInt(args[0]);
-                if (idx < 1 || idx > tasks.size()) {
-                    throw new AtomTaskNotFoundException(idx);
-                }
-                if (command.equals(Command.MARK)) {
-                    markTask(idx);
-                } else if (command.equals(Command.UNMARK)) {
-                    unmarkTask(idx);
-                } else {
-                    deleteTask(idx);
-                }
+                deleteTask(Integer.parseInt(args[0]));
                 break;
             case Command.TODO:
                 addToDo(args);
@@ -145,6 +139,7 @@ public class Atom {
                 break;
             case Command.FIND:
                 ui.findList(tasks.find(args[0]));
+                break;
             default:
                 break;
             }

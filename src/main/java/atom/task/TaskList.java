@@ -1,5 +1,7 @@
 package atom.task;
 
+import atom.exception.AtomTaskNotFoundException;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -17,19 +19,25 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public Task remove(int idx) {
+    public Task remove(int idx) throws AtomTaskNotFoundException {
+        if (idx < 0 || idx > size()) {
+            throw new AtomTaskNotFoundException(idx + 1);
+        }
         return tasks.remove(idx);
     }
 
-    public void mark(int idx) {
-        tasks.get(idx).mark();
+    public void mark(int idx) throws AtomTaskNotFoundException {
+        get(idx).mark();
     }
 
-    public void unmark(int idx) {
-        tasks.get(idx).unmark();
+    public void unmark(int idx) throws AtomTaskNotFoundException {
+        get(idx).unmark();
     }
 
-    public Task get(int idx) {
+    public Task get(int idx) throws AtomTaskNotFoundException {
+        if (idx < 0 || idx > size()) {
+            throw new AtomTaskNotFoundException(idx + 1);
+        }
         return tasks.get(idx);
     }
 
