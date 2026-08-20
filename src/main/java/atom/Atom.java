@@ -7,12 +7,20 @@ import atom.storage.Storage;
 import atom.task.*;
 import atom.ui.Ui;
 
+/**
+ * A chatbot called Atom.
+ * Helps the user keep track of tasks such as
+ * todos, deadlines and events.
+ */
 public class Atom {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
     private final Parser parser;
 
+    /**
+     * An enum for the valid commands.
+     */
     public enum Command {
         BYE,
         LIST,
@@ -24,6 +32,9 @@ public class Atom {
         DELETE
     }
 
+    /**
+     * Instantiates the Atom chatbot.
+     */
     public Atom() {
         storage = new Storage();
         tasks = new TaskList(storage.load());
@@ -31,6 +42,9 @@ public class Atom {
         parser = new Parser();
     }
 
+    /**
+     * Run the Atom chatbot.
+     */
     public void run() {
         ui.greet();
         readLine();
@@ -80,6 +94,9 @@ public class Atom {
         storage.deleteTask(idx);
     }
 
+    /**
+     * Reads the user input and then carries out the appropriate action.
+     */
     private void readLine() {
         Parser.Line line;
         try {
