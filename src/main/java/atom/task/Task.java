@@ -9,21 +9,21 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        isDone = false;
     }
 
     /**
      * Marks a task as done.
      */
     public void mark() {
-        this.isDone = true;
+        isDone = true;
     }
 
     /**
      * Marks a task as undone.
      */
     public void unmark() {
-        this.isDone = false;
+        isDone = false;
     }
 
     @Override
