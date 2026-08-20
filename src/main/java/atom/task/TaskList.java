@@ -37,6 +37,23 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Finds the all tasks which contains the
+     * matching keyword in the description.
+     *
+     * @param keyword The keyword.
+     * @return A <code>TaskList</code> containing all matching tasks.
+     */
+    public TaskList find(String keyword) {
+        ArrayList<Task> res = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.getDescription().contains(keyword)) {
+                res.add(t);
+            }
+        }
+        return new TaskList(res);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

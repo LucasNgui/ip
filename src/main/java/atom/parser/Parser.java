@@ -90,6 +90,7 @@ public class Parser {
         case Atom.Command.UNMARK:
         case Atom.Command.DELETE:
         case Atom.Command.TODO:
+        case Atom.Command.FIND:
             if (argsNum != 1) {
                 throw new AtomMismatchedArgumentsException(
                         command.toString().toLowerCase(), 1, argsNum);

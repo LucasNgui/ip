@@ -2,6 +2,7 @@ package atom.ui;
 
 import atom.exception.AtomException;
 import atom.task.Task;
+import atom.task.TaskList;
 
 /**
  * Handles interactions with the user
@@ -87,6 +88,16 @@ public class Ui {
                 + String.format("\nYou now have %d tasks in the list.", size));
     }
 
+    /**
+     * Prints out the find task message.
+     *
+     * @param tasks The <code>TaskList</code> to be printed.
+     */
+    public void findList(TaskList tasks) {
+        printWrappedText("I've found these matching tasks in your list:\n"
+                + tasks.toString());
+    }
+    
     /**
      * Prints out an error message.
      *
