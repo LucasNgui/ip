@@ -17,6 +17,13 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * @return The description of the task.
+     */
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         String cross = isDone ? "X" : " ";

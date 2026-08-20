@@ -21,7 +21,8 @@ public class Atom {
         TODO,
         DEADLINE,
         EVENT,
-        DELETE
+        DELETE,
+        FIND
     }
 
     public Atom() {
@@ -125,6 +126,8 @@ public class Atom {
             case Command.EVENT:
                 addEvent(args);
                 break;
+            case Command.FIND:
+                ui.findList(tasks.find(args[0]));
             default:
                 break;
             }

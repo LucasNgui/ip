@@ -2,6 +2,7 @@ package atom.ui;
 
 import atom.exception.AtomException;
 import atom.task.Task;
+import atom.task.TaskList;
 
 public class Ui {
     public static final String NAME = "Atom";
@@ -43,6 +44,16 @@ public class Ui {
         printWrappedText("Alright! I've removed this task:\n"
                 + task
                 + String.format("\nYou now have %d tasks in the list.", size));
+    }
+
+    /**
+     * Prints out the find task message.
+     *
+     * @param tasks The <code>TaskList</code> to be printed.
+     */
+    public void findList(TaskList tasks) {
+        printWrappedText("I've found these matching tasks in your list:\n"
+                + tasks.toString());
     }
 
     public void printError(AtomException e) {
