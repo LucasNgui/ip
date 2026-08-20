@@ -6,15 +6,15 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        isDone = false;
     }
 
     public void mark() {
-        this.isDone = true;
+        isDone = true;
     }
 
     public void unmark() {
-        this.isDone = false;
+        isDone = false;
     }
 
     @Override
