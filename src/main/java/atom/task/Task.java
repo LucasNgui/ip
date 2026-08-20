@@ -1,5 +1,8 @@
 package atom.task;
 
+/**
+ * A parent class for tasks.
+ */
 public class Task {
     protected boolean isDone;
     protected final String description;
@@ -9,10 +12,16 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Marks a task as done.
+     */
     public void mark() {
         this.isDone = true;
     }
 
+    /**
+     * Marks a task as undone.
+     */
     public void unmark() {
         this.isDone = false;
     }

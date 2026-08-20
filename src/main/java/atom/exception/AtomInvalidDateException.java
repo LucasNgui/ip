@@ -1,5 +1,8 @@
 package atom.exception;
 
+/**
+ * An exception for invalid dates.
+ */
 public class AtomInvalidDateException extends AtomException {
     public AtomInvalidDateException() {
         super("Oh no! Invalid date provided.");
