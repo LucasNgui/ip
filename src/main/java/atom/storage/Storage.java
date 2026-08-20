@@ -17,15 +17,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Handles saving and loading data.
+ */
 public class Storage {
     private final static String savePath = "./data/atom.txt";
 
+    /**
+     * An enum for types of tasks.
+     */
     public enum TaskName {
         T, D, E
     }
 
+    /**
+     * Instantiates a <code>Storage</code> and
+     * checks if a save file exists and creates one if it does not.
+     */
     public Storage() {
-        // Checks if a save file exists and creates one if it does not.
         File file = new File(savePath);
 
         File parentDir = file.getParentFile();
@@ -40,6 +49,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads data from the save file.
+     *
+     * @return A <code>TaskList</code> filled with tasks from the loaded data.
+     */
     public ArrayList<Task> load() {
         File f = new File(savePath);
         ArrayList<Task> tasks = new ArrayList<>();
@@ -83,6 +97,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Adds a task to the save file.
+     *
+     * @param taskName The name of the task.
+     * @param args The arguments to the task.
+     */
     public void writeTask(TaskName taskName, String[] args) {
         StringBuilder sb = new StringBuilder(taskName.toString());
         sb.append(" /0");
@@ -100,6 +120,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Marks a task in the save file.
+     *
+     * @param taskIdx The index of the task to be marked.
+     */
     public void markTask(int taskIdx) {
         Path path = Paths.get(savePath);
         try {
@@ -117,6 +142,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Marks a task in the save file.
+     *
+     * @param taskIdx The index of the task to be marked.
+     */
     public void unmarkTask(int taskIdx) {
         Path path = Paths.get(savePath);
         try {
@@ -134,6 +164,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Deletes a task in the save file.
+     *
+     * @param taskIdx The index of the task to be deleted.
+     */
     public void deleteTask(int taskIdx) {
         Path path = Paths.get(savePath);
         try {
