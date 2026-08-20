@@ -6,10 +6,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a task with a start and end time.
+ */
 public class Event extends Task {
     private final LocalDate startTime;
     private final LocalDate endTime;
 
+    /**
+     * Instantiates an <code>Event</code> task.
+     *
+     * @param description The description of the task.
+     * @param startTime The starting time of the task.
+     * @param endTime The ending time of the task.
+     */
     public Event(String description, String startTime, String endTime) {
         super(description);
         try {
