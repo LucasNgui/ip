@@ -4,21 +4,37 @@ import atom.exception.AtomTaskNotFoundException;
 
 import java.util.ArrayList;
 
+/**
+ * A class to store and operate on tasks in a list.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
-    public TaskList() {
-        this.tasks = new ArrayList<>();
-    }
-
+    /**
+     * Instantiates a <code>TaskList</code>.
+     *
+     * @param tasks The list of tasks to be instantiated with.
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Add a task to the list.
+     *
+     * @param task The task to be added.
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Remove a task form the list.
+     *
+     * @param idx The index of the task to be removed.
+     * @return The removed task.
+     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size().</code>
+     */
     public Task remove(int idx) throws AtomTaskNotFoundException {
         if (idx < 0 || idx > size()) {
             throw new AtomTaskNotFoundException(idx + 1);
@@ -26,14 +42,33 @@ public class TaskList {
         return tasks.remove(idx);
     }
 
+    /**
+     * Marks a task in the list as done.
+     *
+     * @param idx The index of the task to be marked.
+     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size()</code>.
+     */
     public void mark(int idx) throws AtomTaskNotFoundException {
         get(idx).mark();
     }
 
+    /**
+     * Marks a task in the list as undone.
+     *
+     * @param idx The index of the task to be unmarked.
+     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size()</code>.
+     */
     public void unmark(int idx) throws AtomTaskNotFoundException {
         get(idx).unmark();
     }
 
+    /**
+     * Retrieve a task by index.
+     *
+     * @param idx The index of the task to be retrieved.
+     * @return The retrieved task.
+     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size()</code>.
+     */
     public Task get(int idx) throws AtomTaskNotFoundException {
         if (idx < 0 || idx > size()) {
             throw new AtomTaskNotFoundException(idx + 1);
@@ -41,6 +76,9 @@ public class TaskList {
         return tasks.get(idx);
     }
 
+    /**
+     * @return The size of the list.
+     */
     public int size() {
         return tasks.size();
     }
