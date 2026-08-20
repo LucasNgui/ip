@@ -4,7 +4,7 @@ import atom.exception.AtomException;
 import atom.task.Task;
 
 public class Ui {
-    public static final String NAME = "atom";
+    public static final String NAME = "Atom";
 
     public void printWrappedText(String text) {
         String wrapper = "~~~~~~~~~~~~~~~~~~~~~~~~~";
@@ -14,11 +14,11 @@ public class Ui {
     }
 
     public void greet() {
-        printWrappedText(String.format("Hi! I'm %s~☆ ヽ(*・ω・)ﾉ", NAME));
+        printWrappedText(String.format("Hi! I'm %s! ('^')/", NAME));
     }
 
     public void bye() {
-        printWrappedText("Bye bye! (￣▽￣)ノ");
+        printWrappedText("Bye bye! ('^')/");
     }
     
     public void list(String list) {
