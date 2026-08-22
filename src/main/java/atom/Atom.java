@@ -113,35 +113,35 @@ public class Atom {
 
         try {
             switch (command) {
-            case Command.BYE:
-                ui.bye();
-                return;
-            case Command.LIST:
-                ui.list(tasks.toString());
-                break;
-            case Command.MARK:
-                markTask(Integer.parseInt(args[0]));
-                break;
-            case Command.UNMARK:
-                unmarkTask(Integer.parseInt(args[0]));
-                break;
-            case Command.DELETE:
-                deleteTask(Integer.parseInt(args[0]));
-                break;
-            case Command.TODO:
-                addToDo(args);
-                break;
-            case Command.DEADLINE:
-                addDeadline(args);
-                break;
-            case Command.EVENT:
-                addEvent(args);
-                break;
-            case Command.FIND:
-                ui.findList(tasks.find(args[0]));
-                break;
-            default:
-                break;
+                case Command.BYE:
+                    ui.bye();
+                    return;
+                case Command.LIST:
+                    ui.list(tasks.toString());
+                    break;
+                case Command.MARK:
+                    markTask(Integer.parseInt(args[0]));
+                    break;
+                case Command.UNMARK:
+                    unmarkTask(Integer.parseInt(args[0]));
+                    break;
+                case Command.DELETE:
+                    deleteTask(Integer.parseInt(args[0]));
+                    break;
+                case Command.TODO:
+                    addToDo(args);
+                    break;
+                case Command.DEADLINE:
+                    addDeadline(args);
+                    break;
+                case Command.EVENT:
+                    addEvent(args);
+                    break;
+                case Command.FIND:
+                    ui.findList(tasks.find(args[0]));
+                    break;
+                default:
+                    break;
             }
             readLine();
         } catch (AtomException e) {

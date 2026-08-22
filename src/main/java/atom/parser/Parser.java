@@ -51,21 +51,21 @@ public class Parser {
 
         checkCommand(command, args.length);
         switch (command) {
-        case Atom.Command.MARK:
-        case Atom.Command.UNMARK:
-        case Atom.Command.DELETE:
-            try {
-                Integer.parseInt(args[0]);
-            } catch (NumberFormatException e) {
-                throw new AtomInvalidTypeException(command.toString().toLowerCase());
-            }
-            break;
-        case Atom.Command.DEADLINE:
-            checkDeadlineArgs(args);
-            break;
-        case Atom.Command.EVENT:
-            checkEventArgs(args);
-            break;
+            case Atom.Command.MARK:
+            case Atom.Command.UNMARK:
+            case Atom.Command.DELETE:
+                try {
+                    Integer.parseInt(args[0]);
+                } catch (NumberFormatException e) {
+                    throw new AtomInvalidTypeException(command.toString().toLowerCase());
+                }
+                break;
+            case Atom.Command.DEADLINE:
+                checkDeadlineArgs(args);
+                break;
+            case Atom.Command.EVENT:
+                checkEventArgs(args);
+                break;
         }
         return new Line(command, args);
     }
@@ -79,37 +79,37 @@ public class Parser {
      */
     private void checkCommand(Atom.Command command, int argsNum) throws AtomException {
         switch (command) {
-        case Atom.Command.BYE:
-        case Atom.Command.LIST:
-            if (argsNum != 0) {
-                throw new AtomMismatchedArgumentsException(
-                        command.toString().toLowerCase(), 0, argsNum);
-            }
-            break;
-        case Atom.Command.MARK:
-        case Atom.Command.UNMARK:
-        case Atom.Command.DELETE:
-        case Atom.Command.TODO:
-        case Atom.Command.FIND:
-            if (argsNum != 1) {
-                throw new AtomMismatchedArgumentsException(
-                        command.toString().toLowerCase(), 1, argsNum);
-            }
-            break;
-        case Atom.Command.DEADLINE:
-            if (argsNum != 2) {
-                throw new AtomMismatchedArgumentsException(
-                        command.toString().toLowerCase(), 2, argsNum);
-            }
-            break;
-        case Atom.Command.EVENT:
-            if (argsNum != 3) {
-                throw new AtomMismatchedArgumentsException(
-                        command.toString().toLowerCase(), 3, argsNum);
-            }
-            break;
-        default:
-            throw new AtomInvalidCommandException();
+            case Atom.Command.BYE:
+            case Atom.Command.LIST:
+                if (argsNum != 0) {
+                    throw new AtomMismatchedArgumentsException(
+                            command.toString().toLowerCase(), 0, argsNum);
+                }
+                break;
+            case Atom.Command.MARK:
+            case Atom.Command.UNMARK:
+            case Atom.Command.DELETE:
+            case Atom.Command.TODO:
+            case Atom.Command.FIND:
+                if (argsNum != 1) {
+                    throw new AtomMismatchedArgumentsException(
+                            command.toString().toLowerCase(), 1, argsNum);
+                }
+                break;
+            case Atom.Command.DEADLINE:
+                if (argsNum != 2) {
+                    throw new AtomMismatchedArgumentsException(
+                            command.toString().toLowerCase(), 2, argsNum);
+                }
+                break;
+            case Atom.Command.EVENT:
+                if (argsNum != 3) {
+                    throw new AtomMismatchedArgumentsException(
+                            command.toString().toLowerCase(), 3, argsNum);
+                }
+                break;
+            default:
+                throw new AtomInvalidCommandException();
         }
     }
 
