@@ -42,4 +42,23 @@ public abstract class Command {
      * @return The command name.
      */
     public abstract String getCommandName();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Command c = (Command) obj;
+        for (int i = 0; i < args.length; i++) {
+            if (!args[i].equals(c.args[i])) {
+                System.out.print(args[i]);
+                System.out.print(c.args[i]);
+                return false;
+            }
+        }
+        return true;
+    }
 }
