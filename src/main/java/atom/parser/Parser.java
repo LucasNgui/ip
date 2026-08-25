@@ -1,11 +1,8 @@
 package atom.parser;
 
-import atom.Atom;
 import atom.command.*;
 import atom.exception.AtomException;
 import atom.exception.AtomInvalidCommandException;
-import atom.exception.AtomInvalidTypeException;
-import atom.exception.AtomMismatchedArgumentsException;
 
 import java.util.Scanner;
 

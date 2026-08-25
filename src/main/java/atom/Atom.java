@@ -1,9 +1,7 @@
 package atom;
 
 import atom.command.ByeCommand;
-import atom.command.Command;
 import atom.exception.AtomException;
-import atom.exception.AtomTaskNotFoundException;
 import atom.parser.Parser;
 import atom.storage.Storage;
 import atom.task.*;
