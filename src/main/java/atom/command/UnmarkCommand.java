@@ -7,7 +7,18 @@ import atom.storage.Storage;
 import atom.task.TaskList;
 import atom.ui.Ui;
 
+/**
+ * Represents an unmark command.
+ */
 public class UnmarkCommand extends Command {
+    /**
+     * Instantiates an <code>UnmarkCommand</code>.
+     *
+     * @param args The arguments to the command.
+     * @throws AtomMismatchedArgumentsException If the number of arguments given
+     * does not match the expected number.
+     * @throws AtomInvalidTypeException If the argument given is not an integer.
+     */
     public UnmarkCommand(String[] args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 1);
@@ -18,6 +29,9 @@ public class UnmarkCommand extends Command {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage)
             throws AtomTaskNotFoundException {
@@ -27,6 +41,9 @@ public class UnmarkCommand extends Command {
         storage.unmarkTask(idx);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String getCommandName() {
         return "unmark";

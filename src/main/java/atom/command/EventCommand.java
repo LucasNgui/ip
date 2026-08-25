@@ -8,7 +8,17 @@ import atom.task.Event;
 import atom.task.TaskList;
 import atom.ui.Ui;
 
+/**
+ * Represents an event command.
+ */
 public class EventCommand extends Command {
+    /**
+     * Instantiates a <code>EventCommand</code>.
+     *
+     * @param args The arguments to the command.
+     * @throws AtomMismatchedArgumentsException If the number of arguments given
+     * does not match the expected number.
+     */
     public EventCommand(String[] args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 3);
@@ -16,6 +26,9 @@ public class EventCommand extends Command {
         checkEventArgs();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Event event = new Event(args[0].strip(),
@@ -26,6 +39,9 @@ public class EventCommand extends Command {
         storage.writeTask(Storage.TaskName.E, args);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String getCommandName() {
         return "event";

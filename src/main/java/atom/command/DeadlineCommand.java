@@ -7,7 +7,17 @@ import atom.task.Deadline;
 import atom.task.TaskList;
 import atom.ui.Ui;
 
+/**
+ * Represents a deadline command.
+ */
 public class DeadlineCommand extends Command {
+    /**
+     * Instantiates a <code>DeadlineCommand</code>.
+     *
+     * @param args The arguments to the command.
+     * @throws AtomMismatchedArgumentsException If the number of arguments given
+     * does not match the expected number.
+     */
     public DeadlineCommand(String[] args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 2);
@@ -15,6 +25,9 @@ public class DeadlineCommand extends Command {
         checkDeadlineArgs();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Deadline deadline = new Deadline(args[0].strip(),
@@ -24,6 +37,9 @@ public class DeadlineCommand extends Command {
         storage.writeTask(Storage.TaskName.D, args);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String getCommandName() {
         return "deadline";

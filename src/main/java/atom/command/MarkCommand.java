@@ -7,7 +7,18 @@ import atom.storage.Storage;
 import atom.task.TaskList;
 import atom.ui.Ui;
 
+/**
+ * Represents a mark command.
+ */
 public class MarkCommand extends Command {
+    /**
+     * Instantiates a <code>MarkCommand</code>.
+     *
+     * @param args The arguments to the command.
+     * @throws AtomMismatchedArgumentsException If the number of arguments given
+     * does not match the expected number.
+     * @throws AtomInvalidTypeException If the argument given is not an integer.
+     */
     public MarkCommand(String[] args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 1);
@@ -18,6 +29,9 @@ public class MarkCommand extends Command {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage)
             throws AtomTaskNotFoundException {
@@ -27,6 +41,9 @@ public class MarkCommand extends Command {
         storage.markTask(idx);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String getCommandName() {
         return "mark";
