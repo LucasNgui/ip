@@ -1,6 +1,6 @@
 package atom.parser;
 
-import atom.Atom;
+import atom.command.*;
 import atom.exception.AtomInvalidCommandException;
 import atom.exception.AtomInvalidTypeException;
 import atom.exception.AtomMismatchedArgumentsException;
@@ -30,50 +30,46 @@ public class ParserTest {
     public void readLine_bye_writtenCorrectly() {
         setInput("bye\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.BYE, l.command());
-        assertArrayEquals(new String[]{}, l.args());
+        assertEquals(new ByeCommand(new String[]{}), c);
+        //assertArrayEquals(new String[]{}, c.args);
     }
 
     @Test
     public void readLine_list_extraSpaces_writtenCorrectly() {
         setInput("   list   \n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.LIST, l.command());
-        assertArrayEquals(new String[]{}, l.args());
+        assertEquals(new ListCommand(new String[]{}), c);
     }
 
     @Test
     public void readLine_mark_extraSpaces_writtenCorrectly() {
         setInput("mark      1\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.MARK, l.command());
-        assertArrayEquals(new String[]{"1"}, l.args());
+        assertEquals(new MarkCommand(new String[]{"1"}), c);
     }
 
     @Test
     public void readLine_unmark_capitalisedCommand_writtenCorrectly() {
         setInput("uNmaRk 10\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.UNMARK, l.command());
-        assertArrayEquals(new String[]{"10"}, l.args());
+        assertEquals(new UnmarkCommand(new String[]{"10"}), c);
     }
 
     @Test
     public void readLine_delete_writtenCorrectly() {
         setInput("delete 64\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.DELETE, l.command());
-        assertArrayEquals(new String[]{"64"}, l.args());
+        assertEquals(new DeleteCommand(new String[]{"64"}), c);
     }
 
     @Test
@@ -94,30 +90,27 @@ public class ParserTest {
     public void readLine_todo_writtenCorrectly() {
         setInput("todo borrow book\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.TODO, l.command());
-        assertArrayEquals(new String[]{"borrow book"}, l.args());
+        assertEquals(new ToDoCommand(new String[]{"borrow book"}), c);
     }
 
     @Test
     public void readLine_deadline_writtenCorrectly() {
         setInput("deadline return book /by 2024-10-02\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.DEADLINE, l.command());
-        assertArrayEquals(new String[]{"return book", "2024-10-02"}, l.args());
+        assertEquals(new DeadlineCommand(new String[]{"return book", "by 2024-10-02"}), c);
     }
 
     @Test
     public void readLine_event_writtenCorrectly() {
         setInput("event meeting /from 2pm /to 4pm\n");
         Parser p = new Parser();
-        Parser.Line l = p.readLine();
+        Command c = p.readLine();
 
-        assertEquals(Atom.Command.EVENT, l.command());
-        assertArrayEquals(new String[]{"meeting", "2pm", "4pm"}, l.args());
+        assertEquals(new EventCommand(new String[]{"meeting", "from 2pm", "to 4pm"}), c);
     }
 
     @Test
