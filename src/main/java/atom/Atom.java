@@ -1,5 +1,7 @@
 package atom;
 
+import atom.command.ByeCommand;
+import atom.command.Command;
 import atom.exception.AtomException;
 import atom.exception.AtomTaskNotFoundException;
 import atom.parser.Parser;
@@ -19,21 +21,6 @@ public class Atom {
     private final Parser parser;
 
     /**
-     * An enum for the valid commands.
-     */
-    public enum Command {
-        BYE,
-        LIST,
-        MARK,
-        UNMARK,
-        TODO,
-        DEADLINE,
-        EVENT,
-        DELETE,
-        FIND
-    }
-
-    /**
      * Instantiates the Atom chatbot.
      */
     public Atom() {
@@ -51,103 +38,25 @@ public class Atom {
         readLine();
     }
 
-    private void markTask(int idx) {
-        tasks.mark(idx - 1);
-        ui.mark(tasks.get(idx - 1));
-        storage.markTask(idx);
-    }
-
-    private void unmarkTask(int idx) {
-        tasks.unmark(idx - 1);
-        ui.unmark(tasks.get(idx - 1));
-        storage.unmarkTask(idx);
-    }
-
-    private void addToDo(String[] args) {
-        ToDo toDo = new ToDo(args[0].strip());
-        addTask(toDo);
-        storage.writeTask(Storage.TaskName.T, args);
-    }
-
-    private void addDeadline(String[] args) {
-        Deadline deadline = new Deadline(args[0].strip(),
-                args[1].strip());
-        addTask(deadline);
-        storage.writeTask(Storage.TaskName.D, args);
-    }
-
-    private void addEvent(String[] args) {
-        Event event = new Event(args[0].strip(),
-                args[1].strip(),
-                args[2].strip());
-        addTask(event);
-        storage.writeTask(Storage.TaskName.E, args);
-    }
-
-    private void addTask(Task task) {
-        tasks.add(task);
-        ui.add(task, tasks.size());
-    }
-
-    private void deleteTask(int idx) {
-        Task t = tasks.remove(idx - 1);
-        ui.remove(t, tasks.size());
-        storage.deleteTask(idx);
-    }
-
     /**
      * Reads the user input and then carries out the appropriate action.
      */
     private void readLine() {
-        Parser.Line line;
+        atom.command.Command command;
         try {
-            line = parser.readLine();
+            command = parser.readLine();
+            command.execute(tasks, ui, storage);
         } catch (AtomException e) {
             ui.printError(e);
             readLine();
             return;
         }
 
-        Command command = line.command();
-        String[] args = line.args();
-
-        try {
-            switch (command) {
-                case Command.BYE:
-                    ui.bye();
-                    return;
-                case Command.LIST:
-                    ui.list(tasks.toString());
-                    break;
-                case Command.MARK:
-                    markTask(Integer.parseInt(args[0]));
-                    break;
-                case Command.UNMARK:
-                    unmarkTask(Integer.parseInt(args[0]));
-                    break;
-                case Command.DELETE:
-                    deleteTask(Integer.parseInt(args[0]));
-                    break;
-                case Command.TODO:
-                    addToDo(args);
-                    break;
-                case Command.DEADLINE:
-                    addDeadline(args);
-                    break;
-                case Command.EVENT:
-                    addEvent(args);
-                    break;
-                case Command.FIND:
-                    ui.findList(tasks.find(args[0]));
-                    break;
-                default:
-                    break;
-            }
-            readLine();
-        } catch (AtomException e) {
-            ui.printError(e);
-            readLine();
+        if (command instanceof ByeCommand) {
+            return;
         }
+
+        readLine();
     }
 
     public static void main(String[] args) {
