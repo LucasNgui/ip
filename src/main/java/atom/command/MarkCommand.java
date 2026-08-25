@@ -2,6 +2,7 @@ package atom.command;
 
 import atom.exception.AtomInvalidTypeException;
 import atom.exception.AtomMismatchedArgumentsException;
+import atom.exception.AtomTaskNotFoundException;
 import atom.storage.Storage;
 import atom.task.TaskList;
 import atom.ui.Ui;
@@ -18,7 +19,8 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage)
+            throws AtomTaskNotFoundException {
         int idx = Integer.parseInt(args[0]);
         tasks.mark(idx - 1);
         ui.mark(tasks.get(idx - 1));
