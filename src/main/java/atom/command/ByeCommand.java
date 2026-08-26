@@ -3,7 +3,6 @@ package atom.command;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents a bye command.
@@ -24,7 +23,7 @@ public class ByeCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         return "Bye bye! ('^')/";
     }
 

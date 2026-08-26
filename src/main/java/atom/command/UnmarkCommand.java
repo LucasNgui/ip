@@ -5,7 +5,6 @@ import atom.exception.AtomMismatchedArgumentsException;
 import atom.exception.AtomTaskNotFoundException;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents an unmark command.
@@ -33,7 +32,7 @@ public class UnmarkCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Storage storage)
             throws AtomTaskNotFoundException {
         int idx = Integer.parseInt(args[0]);
         tasks.unmark(idx - 1);

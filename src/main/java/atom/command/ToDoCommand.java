@@ -4,7 +4,6 @@ import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
 import atom.task.ToDo;
-import atom.ui.Ui;
 
 /**
  * Represents a todo command.
@@ -25,7 +24,7 @@ public class ToDoCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         ToDo toDo = new ToDo(args[0].strip());
         tasks.add(toDo);
         storage.writeTask(Storage.TaskName.T, args);

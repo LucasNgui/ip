@@ -3,7 +3,6 @@ package atom.command;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * A parent class to represent commands.
@@ -35,7 +34,7 @@ public abstract class Command {
      * @param storage The storage.
      * @return  The output message.
      */
-    public abstract String execute(TaskList tasks, Ui ui, Storage storage);
+    public abstract String execute(TaskList tasks, Storage storage);
 
     /**
      * Retrieves the name of the command.

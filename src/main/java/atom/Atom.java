@@ -5,7 +5,6 @@ import atom.exception.AtomException;
 import atom.parser.Parser;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * A chatbot called Atom.
@@ -15,7 +14,6 @@ import atom.ui.Ui;
 public class Atom {
     private final Storage storage;
     private final TaskList tasks;
-    private final Ui ui;
     private final Parser parser;
 
     /**
@@ -24,7 +22,6 @@ public class Atom {
     public Atom() {
         storage = new Storage();
         tasks = new TaskList(storage.load());
-        ui = new Ui();
         parser = new Parser();
     }
 
@@ -32,7 +29,7 @@ public class Atom {
         String outputMessage;
         try {
             Command command = parser.readLine(input);
-            outputMessage = command.execute(tasks, ui, storage);
+            outputMessage = command.execute(tasks, storage);
         } catch (AtomException e) {
             outputMessage = e.getMessage();
         }

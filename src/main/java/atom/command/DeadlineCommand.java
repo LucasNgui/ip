@@ -5,7 +5,6 @@ import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.Deadline;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents a deadline command.
@@ -29,7 +28,7 @@ public class DeadlineCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Deadline deadline = new Deadline(args[0].strip(),
                 args[1].strip());
         tasks.add(deadline);
