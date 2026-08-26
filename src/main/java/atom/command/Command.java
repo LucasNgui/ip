@@ -30,7 +30,6 @@ public abstract class Command {
      * Executes the command.
      *
      * @param tasks The current list of tasks.
-     * @param ui The ui.
      * @param storage The storage.
      * @return  The output message.
      */

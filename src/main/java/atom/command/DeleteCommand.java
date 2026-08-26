@@ -38,7 +38,7 @@ public class DeleteCommand extends Command {
         int idx = Integer.parseInt(args[0]);
         Task t = tasks.remove(idx - 1);
         storage.deleteTask(idx);
-        return  "Alright! I've removed this task:\n"
+        return "Alright! I've removed this task:\n"
                 + t
                 + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
