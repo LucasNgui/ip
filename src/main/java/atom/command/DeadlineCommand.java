@@ -16,7 +16,7 @@ public class DeadlineCommand extends Command {
      *
      * @param args The arguments to the command.
      * @throws AtomMismatchedArgumentsException If the number of arguments given
-     * does not match the expected number.
+     *     does not match the expected number.
      */
     public DeadlineCommand(String[] args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {

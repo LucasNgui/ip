@@ -18,7 +18,7 @@ public abstract class Command {
      * @param args The arguments to the command.
      * @param expected The expected number of arguments.
      * @throws AtomMismatchedArgumentsException If the number of arguments given
-     * does not match the expected number.
+     *     does not match the expected number.
      */
     public Command(String[] args, int expected) throws AtomMismatchedArgumentsException {
         if (args.length != expected) {

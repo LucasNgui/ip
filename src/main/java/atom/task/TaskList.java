@@ -1,8 +1,8 @@
 package atom.task;
 
-import atom.exception.AtomTaskNotFoundException;
-
 import java.util.ArrayList;
+
+import atom.exception.AtomTaskNotFoundException;
 
 /**
  * A class to store and operate on tasks in a list.
