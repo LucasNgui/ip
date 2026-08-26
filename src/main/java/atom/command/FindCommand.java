@@ -15,7 +15,7 @@ public class FindCommand extends Command {
      * @throws AtomMismatchedArgumentsException If the number of arguments given
      *     does not match the expected number.
      */
-    public FindCommand(String[] args) throws AtomMismatchedArgumentsException {
+    public FindCommand(String ... args) throws AtomMismatchedArgumentsException {
         super(args, 1);
     }
 

@@ -19,7 +19,7 @@ public class DeleteCommand extends Command {
      *     does not match the expected number.
      * @throws AtomInvalidTypeException If the argument given is not an integer.
      */
-    public DeleteCommand(String[] args)
+    public DeleteCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 1);
         try {
