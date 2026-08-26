@@ -3,7 +3,6 @@ package atom.command;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents a list command.
@@ -24,8 +23,8 @@ public class ListCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.list(tasks.toString());
+    public String execute(TaskList tasks, Storage storage) {
+        return tasks.toString();
     }
 
     /**

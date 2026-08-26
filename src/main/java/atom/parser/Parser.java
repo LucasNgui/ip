@@ -1,7 +1,5 @@
 package atom.parser;
 
-import java.util.Scanner;
-
 import atom.command.ByeCommand;
 import atom.command.Command;
 import atom.command.DeadlineCommand;
@@ -19,8 +17,6 @@ import atom.exception.AtomInvalidCommandException;
  * Handles making sense of user input.
  */
 public class Parser {
-    private final Scanner scanner;
-
     /**
      * An enum for the valid commands.
      */
@@ -37,21 +33,14 @@ public class Parser {
     }
 
     /**
-     * Instantiates a <code>Parser</code>.
-     */
-    public Parser() {
-        scanner = new Scanner(System.in);
-    }
-
-    /**
      * Reads the user input and breaks it down into its command and arguments
      *
+     * @param input The input string.
      * @return A <code>Command</code> representing the broken down command and its arguments.
      * @throws AtomException If the command or its arguments are invalid.
      */
-    public Command readLine() throws AtomException {
-        String line = scanner.nextLine().strip();
-        String[] split = line.split("\\s+", 2);
+    public Command readLine(String input) throws AtomException {
+        String[] split = input.split("\\s+", 2);
         CommandWord command;
         try {
             command = CommandWord.valueOf(split[0].toUpperCase());

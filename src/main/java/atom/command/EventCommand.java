@@ -5,7 +5,6 @@ import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.Event;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents an event command.
@@ -29,13 +28,15 @@ public class EventCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Event event = new Event(args[0].strip(),
                 args[1].strip(),
                 args[2].strip());
         tasks.add(event);
-        ui.add(event, tasks.size());
         storage.writeTask(Storage.TaskName.E, args);
+        return "Alright! I've added this task:\n"
+                + event
+                + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
     /**

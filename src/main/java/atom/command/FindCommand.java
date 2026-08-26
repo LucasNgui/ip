@@ -3,7 +3,6 @@ package atom.command;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents a find command.
@@ -24,8 +23,9 @@ public class FindCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.findList(tasks.find(args[0]));
+    public String execute(TaskList tasks, Storage storage) {
+        return "I've found these matching tasks in your list:\n"
+                + tasks.find(args[0]).toString();
     }
 
     /**

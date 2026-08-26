@@ -6,7 +6,6 @@ import atom.exception.AtomTaskNotFoundException;
 import atom.storage.Storage;
 import atom.task.Task;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * Represents a delete command.
@@ -34,12 +33,14 @@ public class DeleteCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Storage storage)
             throws AtomTaskNotFoundException {
         int idx = Integer.parseInt(args[0]);
         Task t = tasks.remove(idx - 1);
-        ui.remove(t, tasks.size());
         storage.deleteTask(idx);
+        return "Alright! I've removed this task:\n"
+                + t
+                + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
     /**

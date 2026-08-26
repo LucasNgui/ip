@@ -1,11 +1,10 @@
 package atom;
 
-import atom.command.ByeCommand;
+import atom.command.Command;
 import atom.exception.AtomException;
 import atom.parser.Parser;
 import atom.storage.Storage;
 import atom.task.TaskList;
-import atom.ui.Ui;
 
 /**
  * A chatbot called Atom.
@@ -15,7 +14,6 @@ import atom.ui.Ui;
 public class Atom {
     private final Storage storage;
     private final TaskList tasks;
-    private final Ui ui;
     private final Parser parser;
 
     /**
@@ -24,40 +22,21 @@ public class Atom {
     public Atom() {
         storage = new Storage();
         tasks = new TaskList(storage.load());
-        ui = new Ui();
         parser = new Parser();
     }
 
-    /**
-     * Run the Atom chatbot.
-     */
-    public void run() {
-        ui.greet();
-        readLine();
-    }
-
-    /**
-     * Reads the user input and then carries out the appropriate action.
-     */
-    private void readLine() {
-        atom.command.Command command;
+    public String getResponse(String input) {
+        String outputMessage;
         try {
-            command = parser.readLine();
-            command.execute(tasks, ui, storage);
+            Command command = parser.readLine(input);
+            outputMessage = command.execute(tasks, storage);
         } catch (AtomException e) {
-            ui.printError(e);
-            readLine();
-            return;
+            outputMessage = e.getMessage();
         }
-
-        if (command instanceof ByeCommand) {
-            return;
-        }
-
-        readLine();
+        return outputMessage;
     }
 
-    public static void main(String[] args) {
-        new Atom().run();
+    public String getGreeting() {
+        return "Hi, I'm Atom! ('^')/";
     }
 }
