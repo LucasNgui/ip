@@ -1,6 +1,7 @@
 package atom;
 
 import atom.command.ByeCommand;
+import atom.command.Command;
 import atom.exception.AtomException;
 import atom.parser.Parser;
 import atom.storage.Storage;
@@ -55,6 +56,18 @@ public class Atom {
         }
 
         readLine();
+    }
+
+    public String getResponse(String input) {
+        return "input";
+//        try {
+//            Command command = parser.readLine();
+//            command.execute(tasks, ui, storage);
+//        } catch (AtomException e) {
+//            ui.printError(e);
+//            return "";
+//        }
+//        return "";
     }
 
     public static void main(String[] args) {

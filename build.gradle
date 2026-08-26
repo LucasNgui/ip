@@ -53,7 +53,7 @@ test {
 }
 
 application {
-    mainClass = 'atom.Atom'
+    mainClass = 'atom.Launcher'
 }
 
 jar {
