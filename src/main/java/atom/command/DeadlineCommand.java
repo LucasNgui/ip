@@ -29,12 +29,14 @@ public class DeadlineCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Deadline deadline = new Deadline(args[0].strip(),
                 args[1].strip());
         tasks.add(deadline);
-        ui.add(deadline, tasks.size());
         storage.writeTask(Storage.TaskName.D, args);
+        return "Alright! I've added this task:\n"
+                + deadline
+                + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
     /**

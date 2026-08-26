@@ -1,6 +1,5 @@
 package atom;
 
-import atom.command.ByeCommand;
 import atom.command.Command;
 import atom.exception.AtomException;
 import atom.parser.Parser;
@@ -29,48 +28,14 @@ public class Atom {
         parser = new Parser();
     }
 
-    /**
-     * Run the Atom chatbot.
-     */
-    public void run() {
-        ui.greet();
-        readLine();
-    }
-
-    /**
-     * Reads the user input and then carries out the appropriate action.
-     */
-    private void readLine() {
-        atom.command.Command command;
-        try {
-            command = parser.readLine();
-            command.execute(tasks, ui, storage);
-        } catch (AtomException e) {
-            ui.printError(e);
-            readLine();
-            return;
-        }
-
-        if (command instanceof ByeCommand) {
-            return;
-        }
-
-        readLine();
-    }
-
     public String getResponse(String input) {
-        return "input";
-//        try {
-//            Command command = parser.readLine();
-//            command.execute(tasks, ui, storage);
-//        } catch (AtomException e) {
-//            ui.printError(e);
-//            return "";
-//        }
-//        return "";
-    }
-
-    public static void main(String[] args) {
-        new Atom().run();
+        String outputMessage;
+        try {
+            Command command = parser.readLine(input);
+            outputMessage = command.execute(tasks, ui, storage);
+        } catch (AtomException e) {
+            outputMessage = e.getMessage();
+        }
+        return outputMessage;
     }
 }

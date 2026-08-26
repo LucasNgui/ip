@@ -24,8 +24,8 @@ public class ByeCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.bye();
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "Bye bye! ('^')/";
     }
 
     /**

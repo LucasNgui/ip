@@ -24,8 +24,9 @@ public class FindCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.findList(tasks.find(args[0]));
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "I've found these matching tasks in your list:\n"
+                + tasks.find(args[0]).toString();
     }
 
     /**

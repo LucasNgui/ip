@@ -25,11 +25,13 @@ public class ToDoCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         ToDo toDo = new ToDo(args[0].strip());
         tasks.add(toDo);
-        ui.add(toDo, tasks.size());
         storage.writeTask(Storage.TaskName.T, args);
+        return "Alright! I've added this task:\n"
+                + toDo
+                + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
     /**

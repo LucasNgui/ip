@@ -33,12 +33,12 @@ public class MarkCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws AtomTaskNotFoundException {
         int idx = Integer.parseInt(args[0]);
         tasks.mark(idx - 1);
-        ui.mark(tasks.get(idx - 1));
         storage.markTask(idx);
+        return "Awesome! Marking this task as done:\n" + tasks.get(idx - 1);
     }
 
     /**

@@ -33,12 +33,12 @@ public class UnmarkCommand extends Command {
      * @inheritDoc
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws AtomTaskNotFoundException {
         int idx = Integer.parseInt(args[0]);
         tasks.unmark(idx - 1);
-        ui.unmark(tasks.get(idx - 1));
         storage.unmarkTask(idx);
+        return "Ok. Marking this task as undone:\n" + tasks.get(idx - 1);
     }
 
     /**

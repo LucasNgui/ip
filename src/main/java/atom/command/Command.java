@@ -33,8 +33,9 @@ public abstract class Command {
      * @param tasks The current list of tasks.
      * @param ui The ui.
      * @param storage The storage.
+     * @return  The output message.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage);
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage);
 
     /**
      * Retrieves the name of the command.
