@@ -36,7 +36,7 @@ public class MainWindow extends AnchorPane {
     public void setAtom(Atom a) {
         atom = a;
         dialogContainer.getChildren().add(
-                DialogBox.getDukeDialog(a.getGreeting(), atomImage)
+                DialogBox.getAtomDialog(a.getGreeting(), atomImage)
         );
     }
 
@@ -50,7 +50,7 @@ public class MainWindow extends AnchorPane {
         String response = atom.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, atomImage)
+                DialogBox.getAtomDialog(response, atomImage)
         );
         userInput.clear();
     }
