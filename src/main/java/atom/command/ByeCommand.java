@@ -16,7 +16,7 @@ public class ByeCommand extends Command {
      * @throws AtomMismatchedArgumentsException If the number of arguments given
      *      does not match the expected number.
      */
-    public ByeCommand(String[] args) throws AtomMismatchedArgumentsException {
+    public ByeCommand(String ... args) throws AtomMismatchedArgumentsException {
         super(args, 0);
     }
 

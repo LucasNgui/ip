@@ -18,7 +18,7 @@ public class UnmarkCommand extends Command {
      *     does not match the expected number.
      * @throws AtomInvalidTypeException If the argument given is not an integer.
      */
-    public UnmarkCommand(String[] args)
+    public UnmarkCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 1);
         try {

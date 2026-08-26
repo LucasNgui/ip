@@ -17,7 +17,7 @@ public class EventCommand extends Command {
      * @throws AtomMismatchedArgumentsException If the number of arguments given
      *     does not match the expected number.
      */
-    public EventCommand(String[] args)
+    public EventCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 3);
 

@@ -18,7 +18,7 @@ public class MarkCommand extends Command {
      *     does not match the expected number.
      * @throws AtomInvalidTypeException If the argument given is not an integer.
      */
-    public MarkCommand(String[] args)
+    public MarkCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
         super(args, 1);
         try {

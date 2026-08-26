@@ -16,7 +16,7 @@ public class ToDoCommand extends Command {
      * @throws AtomMismatchedArgumentsException If the number of arguments given
      *     does not match the expected number.
      */
-    public ToDoCommand(String[] args) throws AtomMismatchedArgumentsException {
+    public ToDoCommand(String ... args) throws AtomMismatchedArgumentsException {
         super(args, 1);
     }
 

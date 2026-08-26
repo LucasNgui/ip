@@ -15,7 +15,7 @@ public class ListCommand extends Command {
      * @throws AtomMismatchedArgumentsException If the number of arguments given
      *     does not match the expected number.
      */
-    public ListCommand(String[] args) throws AtomMismatchedArgumentsException {
+    public ListCommand(String ... args) throws AtomMismatchedArgumentsException {
         super(args, 0);
     }
 
