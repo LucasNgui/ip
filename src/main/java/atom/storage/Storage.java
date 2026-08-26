@@ -1,27 +1,27 @@
 package atom.storage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 import atom.exception.AtomTaskNotFoundException;
 import atom.task.Deadline;
 import atom.task.Event;
 import atom.task.Task;
 import atom.task.ToDo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 /**
  * Handles saving and loading data.
  */
 public class Storage {
-    private final static String savePath = "./data/atom.txt";
+    private static final String savePath = "./data/atom.txt";
 
     /**
      * An enum for types of tasks.
@@ -69,29 +69,29 @@ public class Storage {
         while (s.hasNext()) {
             String[] line = s.nextLine().split(" /");
             switch (TaskName.valueOf(line[0])) {
-            case TaskName.T:
-                Task t = new ToDo(line[2]);
-                if (line[1].equals("1")) {
-                    t.mark();
-                }
-                tasks.add(t);
-                break;
-            case TaskName.D:
-                Task d = new Deadline(line[2], line[3]);
-                if (line[1].equals("1")) {
-                    d.mark();
-                }
-                tasks.add(d);
-                break;
-            case TaskName.E:
-                Task e = new Event(line[2], line[3], line[4]);
-                if (line[1].equals("1")) {
-                    e.mark();
-                }
-                tasks.add(e);
-                break;
-            default:
-                break;
+                case TaskName.T:
+                    Task t = new ToDo(line[2]);
+                    if (line[1].equals("1")) {
+                        t.mark();
+                    }
+                    tasks.add(t);
+                    break;
+                case TaskName.D:
+                    Task d = new Deadline(line[2], line[3]);
+                    if (line[1].equals("1")) {
+                        d.mark();
+                    }
+                    tasks.add(d);
+                    break;
+                case TaskName.E:
+                    Task e = new Event(line[2], line[3], line[4]);
+                    if (line[1].equals("1")) {
+                        e.mark();
+                    }
+                    tasks.add(e);
+                    break;
+                default:
+                    break;
             }
         }
         return tasks;

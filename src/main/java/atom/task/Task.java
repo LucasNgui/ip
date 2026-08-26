@@ -7,6 +7,11 @@ public class Task {
     protected boolean isDone;
     protected final String description;
 
+    /**
+     * Instantiates a <code>Task</code>.
+     *
+     * @param description The task description.
+     */
     public Task(String description) {
         this.description = description;
         isDone = false;

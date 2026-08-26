@@ -3,7 +3,6 @@ package atom.command;
 import atom.exception.AtomInvalidTypeException;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
-import atom.task.Deadline;
 import atom.task.Event;
 import atom.task.TaskList;
 import atom.ui.Ui;
@@ -17,7 +16,7 @@ public class EventCommand extends Command {
      *
      * @param args The arguments to the command.
      * @throws AtomMismatchedArgumentsException If the number of arguments given
-     * does not match the expected number.
+     *     does not match the expected number.
      */
     public EventCommand(String[] args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {

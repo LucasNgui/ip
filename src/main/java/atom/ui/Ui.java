@@ -97,7 +97,7 @@ public class Ui {
         printWrappedText("I've found these matching tasks in your list:\n"
                 + tasks.toString());
     }
-    
+
     /**
      * Prints out an error message.
      *

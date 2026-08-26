@@ -16,7 +16,7 @@ public class MarkCommand extends Command {
      *
      * @param args The arguments to the command.
      * @throws AtomMismatchedArgumentsException If the number of arguments given
-     * does not match the expected number.
+     *     does not match the expected number.
      * @throws AtomInvalidTypeException If the argument given is not an integer.
      */
     public MarkCommand(String[] args)

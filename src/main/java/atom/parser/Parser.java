@@ -1,10 +1,19 @@
 package atom.parser;
 
-import atom.command.*;
+import java.util.Scanner;
+
+import atom.command.ByeCommand;
+import atom.command.Command;
+import atom.command.DeadlineCommand;
+import atom.command.DeleteCommand;
+import atom.command.EventCommand;
+import atom.command.FindCommand;
+import atom.command.ListCommand;
+import atom.command.MarkCommand;
+import atom.command.ToDoCommand;
+import atom.command.UnmarkCommand;
 import atom.exception.AtomException;
 import atom.exception.AtomInvalidCommandException;
-
-import java.util.Scanner;
 
 /**
  * Handles making sense of user input.
