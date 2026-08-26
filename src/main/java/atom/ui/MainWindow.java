@@ -35,6 +35,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Duke instance */
     public void setAtom(Atom a) {
         atom = a;
+        dialogContainer.getChildren().add(
+                DialogBox.getDukeDialog(a.getGreeting(), atomImage)
+        );
     }
 
     /**

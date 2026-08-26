@@ -35,4 +35,8 @@ public class Atom {
         }
         return outputMessage;
     }
+
+    public String getGreeting() {
+        return "Hi, I'm Atom! ('^')/";
+    }
 }
