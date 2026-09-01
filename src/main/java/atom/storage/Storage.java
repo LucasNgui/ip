@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import atom.exception.AtomTaskNotFoundException;
 import atom.task.Deadline;
 import atom.task.Event;
 import atom.task.Task;
@@ -130,13 +129,12 @@ public class Storage {
         Path path = Paths.get(savePath);
         try {
             List<String> lines = Files.readAllLines(path);
-            if (taskIdx > 0 && taskIdx <= lines.size()) {
-                StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
-                markedTask.setCharAt(3, '1');
-                lines.set(taskIdx - 1, markedTask.toString());
-            } else {
-                throw new AtomTaskNotFoundException(taskIdx);
-            }
+            assertValidTask(lines.size(), taskIdx);
+
+            StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
+            markedTask.setCharAt(3, '1');
+            lines.set(taskIdx - 1, markedTask.toString());
+
             Files.write(path, lines);
         } catch (IOException e) {
             System.out.println("Error in writing to save file.");
@@ -152,13 +150,12 @@ public class Storage {
         Path path = Paths.get(savePath);
         try {
             List<String> lines = Files.readAllLines(path);
-            if (taskIdx > 0 && taskIdx <= lines.size()) {
-                StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
-                markedTask.setCharAt(3, '0');
-                lines.set(taskIdx - 1, markedTask.toString());
-            } else {
-                throw new AtomTaskNotFoundException(taskIdx);
-            }
+            assertValidTask(lines.size(), taskIdx);
+
+            StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
+            markedTask.setCharAt(3, '0');
+            lines.set(taskIdx - 1, markedTask.toString());
+
             Files.write(path, lines);
         } catch (IOException e) {
             System.out.println("Error in writing to save file.");
@@ -174,14 +171,23 @@ public class Storage {
         Path path = Paths.get(savePath);
         try {
             List<String> lines = Files.readAllLines(path);
-            if (taskIdx >= 0 && taskIdx < lines.size()) {
-                lines.remove(taskIdx);
-                Files.write(path, lines);
-            } else {
-                throw new AtomTaskNotFoundException(taskIdx);
-            }
+            assertValidTask(lines.size(), taskIdx);
+
+            lines.remove(taskIdx);
+
+            Files.write(path, lines);
         } catch (IOException e) {
             System.out.println("Error in writing to save file.");
         }
+    }
+
+    /**
+     * Asserts if the provided task index is valid.
+     *
+     * @param maxIdx The maximum task index.
+     * @param taskIdx The task index provided.
+     */
+    private void assertValidTask(int maxIdx, int taskIdx) {
+        assert taskIdx >= 0 && taskIdx < maxIdx : "Task index out of bounds";
     }
 }
