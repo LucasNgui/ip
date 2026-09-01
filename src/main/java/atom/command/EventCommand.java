@@ -10,6 +10,16 @@ import atom.task.TaskList;
  * Represents an event command.
  */
 public class EventCommand extends Command {
+    private static final String COMMAND_NAME = "event";
+
+    private static final int EXPECTED_ARGUMENTS = 3;
+    private static final int EXPECTED_OUTPUT_ARGUMENTS = 2;
+
+    /** The prefix to indicate the start time argument */
+    private static final String FROM_PREFIX = "from ";
+    /** The prefix to indicate the end time argument */
+    private static final String TO_PREFIX = "to ";
+
     /**
      * Instantiates a <code>EventCommand</code>.
      *
@@ -19,9 +29,8 @@ public class EventCommand extends Command {
      */
     public EventCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
-        super(args, 3);
-
-        checkEventArgs();
+        super(args, EXPECTED_ARGUMENTS);
+        removeArgumentPrefix();
     }
 
     @Override
@@ -31,24 +40,43 @@ public class EventCommand extends Command {
                 args[2].strip());
         tasks.add(event);
         storage.writeTask(Storage.TaskName.E, args);
-        return "Alright! I've added this task:\n"
-                + event
-                + String.format("\nYou now have %d tasks in the list.", tasks.size());
+        return getOutputMessage(event.toString(), Integer.toString(tasks.size()));
     }
 
     @Override
     public String getCommandName() {
-        return "event";
+        return COMMAND_NAME;
+    }
+
+    @Override
+    protected String getOutputMessage(String ... outputArgs) {
+        assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        return "Alright! I've added this task:\n"
+                + outputArgs[0]
+                + "\nYou now have "
+                + outputArgs[1]
+                + " tasks in the list.";
     }
 
     /**
-     * Checks if the arguments to event are correct and then reformats it.
+     * Removes the prefixes from the start time and end time arguments.
+     *
+     * @throws AtomInvalidTypeException If the arguments do not have the correct prefix.
      */
-    private void checkEventArgs() {
-        if (!args[1].startsWith("from ") || !args[2].startsWith("to ")) {
+    private void removeArgumentPrefix() throws AtomInvalidTypeException {
+        checkArgumentPrefix();
+        args[1] = args[1].substring(FROM_PREFIX.length()).strip();
+        args[2] = args[2].substring(TO_PREFIX.length()).strip();
+    }
+
+    /**
+     * Checks if the start time and end time arguments have the correct prefix.
+     *
+     * @throws AtomInvalidTypeException If the arguments do not have the correct prefix.
+     */
+    private void checkArgumentPrefix() throws AtomInvalidTypeException {
+        if (!args[1].startsWith(FROM_PREFIX) || !args[2].startsWith(TO_PREFIX)) {
             throw new AtomInvalidTypeException(getCommandName());
         }
-        args[1] = args[1].substring(5).strip();
-        args[2] = args[2].substring(3).strip();
     }
 }

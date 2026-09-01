@@ -11,6 +11,11 @@ import atom.task.TaskList;
  * Represents a delete command.
  */
 public class DeleteCommand extends Command {
+    private static final String COMMAND_NAME = "delete";
+
+    private static final int EXPECTED_ARGUMENTS = 1;
+    private static final int EXPECTED_OUTPUT_ARGUMENTS = 2;
+
     /**
      * Instantiates a <code>DeleteCommand</code>.
      *
@@ -21,12 +26,8 @@ public class DeleteCommand extends Command {
      */
     public DeleteCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
-        super(args, 1);
-        try {
-            Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            throw new AtomInvalidTypeException(getCommandName());
-        }
+        super(args, EXPECTED_ARGUMENTS);
+        checkIntegerArgument(args[0]);
     }
 
     @Override
@@ -35,13 +36,21 @@ public class DeleteCommand extends Command {
         int idx = Integer.parseInt(args[0]);
         Task t = tasks.remove(idx - 1);
         storage.deleteTask(idx);
-        return "Alright! I've removed this task:\n"
-                + t
-                + String.format("\nYou now have %d tasks in the list.", tasks.size());
+        return getOutputMessage(t.toString(), Integer.toString(tasks.size()));
     }
 
     @Override
     public String getCommandName() {
-        return "delete";
+        return COMMAND_NAME;
+    }
+
+    @Override
+    protected String getOutputMessage(String ... outputArgs) {
+        assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        return "Alright! I've removed this task:\n"
+                + outputArgs[0]
+                + "\nYou now have "
+                + outputArgs[1]
+                + " tasks in the list.";
     }
 }

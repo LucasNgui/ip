@@ -10,6 +10,14 @@ import atom.task.TaskList;
  * Represents a deadline command.
  */
 public class DeadlineCommand extends Command {
+    private static final String COMMAND_NAME = "deadline";
+
+    private static final int EXPECTED_ARGUMENTS = 2;
+    private static final int EXPECTED_OUTPUT_ARGUMENTS = 2;
+
+    /** The prefix to indicate the deadline argument */
+    private static final String BY_PREFIX = "by ";
+
     /**
      * Instantiates a <code>DeadlineCommand</code>.
      *
@@ -19,9 +27,8 @@ public class DeadlineCommand extends Command {
      */
     public DeadlineCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
-        super(args, 2);
-
-        checkDeadlineArgs();
+        super(args, EXPECTED_ARGUMENTS);
+        removeArgumentPrefix();
     }
 
     @Override
@@ -30,23 +37,42 @@ public class DeadlineCommand extends Command {
                 args[1].strip());
         tasks.add(deadline);
         storage.writeTask(Storage.TaskName.D, args);
-        return "Alright! I've added this task:\n"
-                + deadline
-                + String.format("\nYou now have %d tasks in the list.", tasks.size());
+        return getOutputMessage(deadline.toString(), Integer.toString(tasks.size()));
     }
 
     @Override
     public String getCommandName() {
-        return "deadline";
+        return COMMAND_NAME;
+    }
+
+    @Override
+    protected String getOutputMessage(String ... outputArgs) {
+        assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        return "Alright! I've added this task:\n"
+                + outputArgs[0]
+                + "\nYou now have "
+                + outputArgs[1]
+                + " tasks in the list.";
     }
 
     /**
-     * Checks if the arguments to deadline are correct and then reformats it.
+     * Removes the prefix from the deadline argument.
+     *
+     * @throws AtomInvalidTypeException If the argument does not have the correct prefix.
      */
-    private void checkDeadlineArgs() {
-        if (!args[1].startsWith("by ")) {
+    private void removeArgumentPrefix() throws AtomInvalidTypeException {
+        checkArgumentPrefix();
+        args[1] = args[1].substring(BY_PREFIX.length()).strip();
+    }
+
+    /**
+     * Checks if the deadline argument has the correct prefix.
+     *
+     * @throws AtomInvalidTypeException If the argument does not have the correct prefix.
+     */
+    private void checkArgumentPrefix() throws AtomInvalidTypeException {
+        if (!args[1].startsWith(BY_PREFIX)) {
             throw new AtomInvalidTypeException(getCommandName());
         }
-        args[1] = args[1].substring(3).strip();
     }
 }
