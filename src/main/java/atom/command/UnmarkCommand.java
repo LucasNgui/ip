@@ -10,6 +10,11 @@ import atom.task.TaskList;
  * Represents an unmark command.
  */
 public class UnmarkCommand extends Command {
+    private static final String COMMAND_NAME = "unmark";
+
+    private static final int EXPECTED_ARGUMENTS = 1;
+    private static final int EXPECTED_OUTPUT_ARGUMENTS = 1;
+
     /**
      * Instantiates an <code>UnmarkCommand</code>.
      *
@@ -20,12 +25,8 @@ public class UnmarkCommand extends Command {
      */
     public UnmarkCommand(String ... args)
             throws AtomMismatchedArgumentsException, AtomInvalidTypeException {
-        super(args, 1);
-        try {
-            Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            throw new AtomInvalidTypeException(getCommandName());
-        }
+        super(args, EXPECTED_ARGUMENTS);
+        checkIntegerArgument(args[0]);
     }
 
     @Override
@@ -34,11 +35,18 @@ public class UnmarkCommand extends Command {
         int idx = Integer.parseInt(args[0]);
         tasks.unmark(idx - 1);
         storage.unmarkTask(idx);
-        return "Ok. Marking this task as undone:\n" + tasks.get(idx - 1);
+        return getOutputMessage(tasks.get(idx - 1).toString());
     }
 
     @Override
     public String getCommandName() {
-        return "unmark";
+        return COMMAND_NAME;
+    }
+
+    @Override
+    protected String getOutputMessage(String ... outputArgs) {
+        assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        return "Ok. Marking this task as undone:\n"
+                + outputArgs[0];
     }
 }

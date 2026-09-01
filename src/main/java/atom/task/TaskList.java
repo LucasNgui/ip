@@ -34,12 +34,10 @@ public class TaskList {
      *
      * @param idx The index of the task to be removed.
      * @return The removed task.
-     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size().</code>
+     * @throws AtomTaskNotFoundException If the index is out of bounds.
      */
     public Task remove(int idx) throws AtomTaskNotFoundException {
-        if (idx < 0 || idx > size()) {
-            throw new AtomTaskNotFoundException(idx + 1);
-        }
+        checkTaskIndex(idx);
         return tasks.remove(idx);
     }
 
@@ -47,7 +45,7 @@ public class TaskList {
      * Marks a task in the list as done.
      *
      * @param idx The index of the task to be marked.
-     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size()</code>.
+     * @throws AtomTaskNotFoundException If the index is out of bounds.
      */
     public void mark(int idx) throws AtomTaskNotFoundException {
         get(idx).mark();
@@ -57,7 +55,7 @@ public class TaskList {
      * Marks a task in the list as undone.
      *
      * @param idx The index of the task to be unmarked.
-     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size()</code>.
+     * @throws AtomTaskNotFoundException If the index is out of bounds.
      */
     public void unmark(int idx) throws AtomTaskNotFoundException {
         get(idx).unmark();
@@ -68,12 +66,10 @@ public class TaskList {
      *
      * @param idx The index of the task to be retrieved.
      * @return The retrieved task.
-     * @throws AtomTaskNotFoundException If <code>idx < 0 || idx > size()</code>.
+     * @throws AtomTaskNotFoundException If the index is out of bounds.
      */
     public Task get(int idx) throws AtomTaskNotFoundException {
-        if (idx < 0 || idx > size()) {
-            throw new AtomTaskNotFoundException(idx + 1);
-        }
+        checkTaskIndex(idx);
         return tasks.get(idx);
     }
 
@@ -99,6 +95,18 @@ public class TaskList {
             }
         }
         return new TaskList(res);
+    }
+
+    /**
+     * Checks if the task at the specified index exists.
+     *
+     * @param idx The index of the task to be retrieved.
+     * @throws AtomTaskNotFoundException If the index is out of bounds.
+     */
+    private void checkTaskIndex(int idx) throws AtomTaskNotFoundException {
+        if (idx < 0 || idx > size()) {
+            throw new AtomTaskNotFoundException(idx + 1);
+        }
     }
 
     @Override

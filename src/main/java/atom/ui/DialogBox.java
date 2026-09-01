@@ -24,11 +24,18 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Initializes a <code>DialogBox</code>.
+     *
+     * @param text The text in the dialog box.
+     * @param img The image of the one sending the dialog.
+     */
     private DialogBox(String text, Image img) {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+        fxmlLoader.setController(this);
+        fxmlLoader.setRoot(this);
+
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
-            fxmlLoader.setController(this);
-            fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,10 +56,22 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    /**
+     * Returns a new user dialog box.
+     *
+     * @param text The text in the dialog box.
+     * @param img The user image.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Returns a new Atom dialog box.
+     *
+     * @param text The text in the dialog box.
+     * @param img The Atom image.
+     */
     public static DialogBox getAtomDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
