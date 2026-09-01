@@ -67,7 +67,7 @@ public class Storage {
                 .map(this::convertLineToTask)
                 .toList();
 
-        return (ArrayList<Task>) loadedTasks;
+        return new ArrayList<>(loadedTasks);
     }
 
     /**
