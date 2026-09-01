@@ -40,7 +40,7 @@ public class Parser {
      * @throws AtomException If the command or its arguments are invalid.
      */
     public Command readLine(String input) throws AtomException {
-        String[] split = input.split("\\s+", 2);
+        String[] split = input.strip().split("\\s+", 2);
         CommandWord command;
         try {
             command = CommandWord.valueOf(split[0].toUpperCase());
