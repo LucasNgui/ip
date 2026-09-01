@@ -1,17 +1,26 @@
 package atom.parser;
 
-import atom.command.*;
-import atom.exception.AtomInvalidCommandException;
-import atom.exception.AtomInvalidTypeException;
-import atom.exception.AtomMismatchedArgumentsException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
+import atom.command.ByeCommand;
+import atom.command.Command;
+import atom.command.DeadlineCommand;
+import atom.command.DeleteCommand;
+import atom.command.EventCommand;
+import atom.command.ListCommand;
+import atom.command.MarkCommand;
+import atom.command.ToDoCommand;
+import atom.command.UnmarkCommand;
+import atom.exception.AtomInvalidCommandException;
+import atom.exception.AtomInvalidTypeException;
+import atom.exception.AtomMismatchedArgumentsException;
 
 public class ParserTest {
     private final InputStream originalSystemIn = System.in;
@@ -28,58 +37,52 @@ public class ParserTest {
 
     @Test
     public void readLine_bye_writtenCorrectly() {
-        setInput("bye\n");
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("bye");
 
         assertEquals(new ByeCommand(new String[]{}), c);
-        //assertArrayEquals(new String[]{}, c.args);
     }
 
     @Test
-    public void readLine_list_extraSpaces_writtenCorrectly() {
-        setInput("   list   \n");
+    public void readLine_listExtraSpaces_writtenCorrectly() {
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("   list   ");
 
         assertEquals(new ListCommand(new String[]{}), c);
     }
 
     @Test
-    public void readLine_mark_extraSpaces_writtenCorrectly() {
-        setInput("mark      1\n");
+    public void readLine_markExtraSpaces_writtenCorrectly() {
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("mark      1");
 
         assertEquals(new MarkCommand(new String[]{"1"}), c);
     }
 
     @Test
-    public void readLine_unmark_capitalisedCommand_writtenCorrectly() {
-        setInput("uNmaRk 10\n");
+    public void readLine_unmarkCapitalisedCommand_writtenCorrectly() {
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("uNmaRk 10");
 
         assertEquals(new UnmarkCommand(new String[]{"10"}), c);
     }
 
     @Test
     public void readLine_delete_writtenCorrectly() {
-        setInput("delete 64\n");
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("delete 64");
 
         assertEquals(new DeleteCommand(new String[]{"64"}), c);
     }
 
     @Test
-    public void readLine_delete_invalidType_exceptionThrown() {
-        setInput("delete task\n");
+    public void readLine_deleteInvalidType_exceptionThrown() {
         Parser p = new Parser();
 
         AtomInvalidTypeException exception = assertThrows(
-                AtomInvalidTypeException.class,
-                p::readLine
+                AtomInvalidTypeException.class, () -> {
+                    p.readLine("delete task");
+                }
         );
 
         assertEquals("Oh no! Invalid argument type for delete",
@@ -88,39 +91,36 @@ public class ParserTest {
 
     @Test
     public void readLine_todo_writtenCorrectly() {
-        setInput("todo borrow book\n");
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("todo borrow book");
 
         assertEquals(new ToDoCommand(new String[]{"borrow book"}), c);
     }
 
     @Test
     public void readLine_deadline_writtenCorrectly() {
-        setInput("deadline return book /by 2024-10-02\n");
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("deadline return book /by 2024-10-02");
 
         assertEquals(new DeadlineCommand(new String[]{"return book", "by 2024-10-02"}), c);
     }
 
     @Test
     public void readLine_event_writtenCorrectly() {
-        setInput("event meeting /from 2pm /to 4pm\n");
         Parser p = new Parser();
-        Command c = p.readLine();
+        Command c = p.readLine("event meeting /from 2pm /to 4pm");
 
         assertEquals(new EventCommand(new String[]{"meeting", "from 2pm", "to 4pm"}), c);
     }
 
     @Test
-    public void readLine_event_mismatchedArguments_exceptionThrown() {
-        setInput("event meeting /from 2pm\n");
+    public void readLine_eventMismatchedArguments_exceptionThrown() {
         Parser p = new Parser();
 
         AtomMismatchedArgumentsException exception = assertThrows(
-                AtomMismatchedArgumentsException.class,
-                p::readLine
+                AtomMismatchedArgumentsException.class, () -> {
+                    p.readLine("event meeting /from 2pm");
+                }
         );
 
         assertEquals("Oh no! event expects 3 arguments but got 2.",
@@ -129,12 +129,12 @@ public class ParserTest {
 
     @Test
     public void readLine_unknownCommand_exceptionThrown() {
-        setInput("hello adsasd\n");
         Parser p = new Parser();
 
         AtomInvalidCommandException exception = assertThrows(
-                AtomInvalidCommandException.class,
-                p::readLine
+                AtomInvalidCommandException.class, () -> {
+                    p.readLine("hello adsasd");
+                }
         );
 
         assertEquals("Oh no! I don't know what that means.",
@@ -143,12 +143,12 @@ public class ParserTest {
 
     @Test
     public void readLine_emptyInput_exceptionThrown() {
-        setInput("\n");
         Parser p = new Parser();
 
         AtomInvalidCommandException exception = assertThrows(
-                AtomInvalidCommandException.class,
-                p::readLine
+                AtomInvalidCommandException.class, () -> {
+                    p.readLine("");
+                }
         );
 
         assertEquals("Oh no! I don't know what that means.",
