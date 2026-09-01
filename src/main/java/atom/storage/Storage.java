@@ -1,7 +1,6 @@
 package atom.storage;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import atom.task.Deadline;
 import atom.task.Event;
@@ -55,46 +53,53 @@ public class Storage {
      * @return A <code>TaskList</code> filled with tasks from the loaded data.
      */
     public ArrayList<Task> load() {
-        File f = new File(savePath);
-        ArrayList<Task> tasks = new ArrayList<>();
-        Scanner s;
+        Path path = Paths.get(savePath);
+        List<String> lines;
 
         try {
-            s = new Scanner(f);
-        } catch (FileNotFoundException e) {
-            System.out.println("Save file not found");
-            return tasks;
+            lines = Files.readAllLines(path);
+        } catch (IOException e) {
+            System.out.println("Error in reading from save file.");
+            return null;
         }
 
-        while (s.hasNext()) {
-            String[] line = s.nextLine().split(" /");
-            switch (TaskName.valueOf(line[0])) {
-                case TaskName.T:
-                    Task t = new ToDo(line[2]);
-                    if (line[1].equals("1")) {
-                        t.mark();
-                    }
-                    tasks.add(t);
-                    break;
-                case TaskName.D:
-                    Task d = new Deadline(line[2], line[3]);
-                    if (line[1].equals("1")) {
-                        d.mark();
-                    }
-                    tasks.add(d);
-                    break;
-                case TaskName.E:
-                    Task e = new Event(line[2], line[3], line[4]);
-                    if (line[1].equals("1")) {
-                        e.mark();
-                    }
-                    tasks.add(e);
-                    break;
-                default:
-                    break;
-            }
+        List<Task> loadedTasks = lines.stream()
+                .map(this::convertLineToTask)
+                .toList();
+
+        return (ArrayList<Task>)loadedTasks;
+    }
+
+    /**
+     * Converts a line in a save file to the corresponding task.
+     *
+     * @param line A save file line.
+     * @return The corresponding task.
+     */
+    private Task convertLineToTask(String line) {
+        String[] splitLine = line.split(" /");
+        Task task;
+
+        switch (TaskName.valueOf(splitLine[0])) {
+        case TaskName.T:
+            task = new ToDo(splitLine[2]);
+            break;
+        case TaskName.D:
+            task = new Deadline(splitLine[2], splitLine[3]);
+            break;
+        case TaskName.E:
+            task = new Event(splitLine[2], splitLine[3], splitLine[4]);
+            break;
+        default:
+            assert false : "Invalid save format.";
+            return null;
         }
-        return tasks;
+
+        if (splitLine[1].equals("1")) {
+            task.mark();
+        }
+
+        return task;
     }
 
     /**
