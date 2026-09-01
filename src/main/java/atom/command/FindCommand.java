@@ -8,6 +8,11 @@ import atom.task.TaskList;
  * Represents a find command.
  */
 public class FindCommand extends Command {
+    private static final String COMMAND_NAME = "find";
+
+    private static final int EXPECTED_ARGUMENTS = 1;
+    private static final int EXPECTED_OUTPUT_ARGUMENTS = 1;
+
     /**
      * Instantiates a <code>FindCommand</code>.
      *
@@ -16,17 +21,23 @@ public class FindCommand extends Command {
      *     does not match the expected number.
      */
     public FindCommand(String ... args) throws AtomMismatchedArgumentsException {
-        super(args, 1);
+        super(args, EXPECTED_ARGUMENTS);
     }
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
-        return "I've found these matching tasks in your list:\n"
-                + tasks.find(args[0]).toString();
+        return getOutputMessage(tasks.find(args[0]).toString());
     }
 
     @Override
     public String getCommandName() {
-        return "find";
+        return COMMAND_NAME;
+    }
+
+    @Override
+    protected String getOutputMessage(String ... outputArgs) {
+        assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        return "I've found these matching tasks in your list:\n"
+                + outputArgs[0];
     }
 }

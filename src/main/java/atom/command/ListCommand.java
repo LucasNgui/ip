@@ -8,6 +8,11 @@ import atom.task.TaskList;
  * Represents a list command.
  */
 public class ListCommand extends Command {
+    private static final String COMMAND_NAME = "list";
+
+    private static final int EXPECTED_ARGUMENTS = 0;
+    private static final int EXPECTED_OUTPUT_ARGUMENTS = 1;
+
     /**
      * Instantiates a <code>ListCommand</code>.
      *
@@ -16,16 +21,22 @@ public class ListCommand extends Command {
      *     does not match the expected number.
      */
     public ListCommand(String ... args) throws AtomMismatchedArgumentsException {
-        super(args, 0);
+        super(args, EXPECTED_ARGUMENTS);
     }
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
-        return tasks.toString();
+        return getOutputMessage(tasks.toString());
     }
 
     @Override
     public String getCommandName() {
-        return "list";
+        return COMMAND_NAME;
+    }
+
+    @Override
+    protected String getOutputMessage(String ... outputArgs) {
+        assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        return outputArgs[0];
     }
 }

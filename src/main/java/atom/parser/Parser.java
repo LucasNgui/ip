@@ -12,6 +12,7 @@ import atom.command.ToDoCommand;
 import atom.command.UnmarkCommand;
 import atom.exception.AtomException;
 import atom.exception.AtomInvalidCommandException;
+import javafx.util.Pair;
 
 /**
  * Handles making sense of user input.
@@ -40,17 +41,9 @@ public class Parser {
      * @throws AtomException If the command or its arguments are invalid.
      */
     public Command readLine(String input) throws AtomException {
-        String[] split = input.strip().split("\\s+", 2);
-        CommandWord command;
-        try {
-            command = CommandWord.valueOf(split[0].toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new AtomInvalidCommandException();
-        }
-        String[] args = new String[0];
-        if (split.length > 1) {
-            args = split[1].trim().split(" /");
-        }
+        Pair<CommandWord, String[]> separatedLine = splitLine(input);
+        CommandWord command = separatedLine.getKey();
+        String[] args = separatedLine.getValue();
 
         return switch (command) {
             case CommandWord.BYE -> new ByeCommand(args);
@@ -63,5 +56,32 @@ public class Parser {
             case CommandWord.DEADLINE -> new DeadlineCommand(args);
             case CommandWord.EVENT -> new EventCommand(args);
         };
+    }
+
+    /**
+     * Splits an input line into its command and arguments.
+     *
+     * @param input The input string.
+     * @return A <code>Pair</code> with the first value being the command and the
+     *      second value being the arguments.
+     * @throws AtomInvalidCommandException If the command is invalid.
+     */
+    private Pair<CommandWord, String[]> splitLine(String input)
+            throws AtomInvalidCommandException {
+        String[] split = input.strip().split("\\s+", 2);
+        CommandWord command;
+
+        try {
+            command = CommandWord.valueOf(split[0].toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new AtomInvalidCommandException();
+        }
+
+        String[] args = new String[0];
+        if (split.length > 1) {
+            args = split[1].trim().split(" /");
+        }
+
+        return new Pair<>(command, args);
     }
 }

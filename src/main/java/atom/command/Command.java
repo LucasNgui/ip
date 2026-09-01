@@ -1,5 +1,6 @@
 package atom.command;
 
+import atom.exception.AtomInvalidTypeException;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
@@ -21,9 +22,7 @@ public abstract class Command {
      *     does not match the expected number.
      */
     public Command(String[] args, int expected) throws AtomMismatchedArgumentsException {
-        if (args.length != expected) {
-            throw new AtomMismatchedArgumentsException(getCommandName(), expected, args.length);
-        }
+        checkArgumentsLength(expected, args.length);
         this.args = args;
     }
 
@@ -42,6 +41,58 @@ public abstract class Command {
      * @return The command name.
      */
     public abstract String getCommandName();
+
+    /**
+     * Gets output message from the command.
+     *
+     * @param outputArgs The required arguments to the output message.
+     * @return The output message.
+     */
+    protected abstract String getOutputMessage(String ... outputArgs);
+
+    /**
+     * Asserts if the arguments length is equal to the expected length.
+     * Used when providing the arguments for <code>Command::getOutputMessage</code>.
+     *
+     * @param commandName The name of the command.
+     * @param expected The expected number of arguments.
+     * @param found The number of arguments received.
+     */
+    protected void assertArgumentsLength(String commandName, int expected, int found) {
+        assert expected == found : String.format(
+                "Output message for %s requires %d arguments but received %d.",
+                commandName, expected, found);
+    }
+
+    /**
+     * Checks if an argument can be parsed as an integer.
+     *
+     * @param arg The argument as a <code>String</code>.
+     * @throws AtomInvalidTypeException If the argument cannot be parsed as an integer
+     */
+    protected void checkIntegerArgument(String arg)
+            throws AtomInvalidTypeException {
+        try {
+            Integer.parseInt(arg);
+        } catch (NumberFormatException e) {
+            throw new AtomInvalidTypeException(getCommandName());
+        }
+    }
+
+    /**
+     * Checks if the arguments length is equal to the expected length.
+     *
+     * @param expected The expected number of arguments.
+     * @param found The number of arguments received.
+     * @throws AtomMismatchedArgumentsException If the number of arguments given does
+     *      not match the expected number.
+     */
+    private void checkArgumentsLength(int expected, int found)
+            throws AtomMismatchedArgumentsException {
+        if (expected != found) {
+            throw new AtomMismatchedArgumentsException(getCommandName(), expected, found);
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
