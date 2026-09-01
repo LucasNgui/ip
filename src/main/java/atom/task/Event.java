@@ -10,6 +10,8 @@ import atom.exception.AtomInvalidDateException;
  * Represents a task with a start and end time.
  */
 public class Event extends Task {
+    private static final String DATE_TIME_FORMAT = "MMM d yyyy";
+
     /** The start time of the event */
     private final LocalDate startTime;
 
@@ -37,7 +39,7 @@ public class Event extends Task {
     public String toString() {
         return String.format("[E]%s (from: %s to: %s)",
                 super.toString(),
-                startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy")),
-                endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+                startTime.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)),
+                endTime.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
     }
 }

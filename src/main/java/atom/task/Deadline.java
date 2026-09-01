@@ -10,6 +10,8 @@ import atom.exception.AtomInvalidDateException;
  * Represents a task with a deadline.
  */
 public class Deadline extends Task {
+    private static final String DATE_TIME_FORMAT = "MMM d yyyy";
+
     /** The due date */
     private final LocalDate deadline;
 
@@ -32,6 +34,6 @@ public class Deadline extends Task {
     public String toString() {
         return String.format("[D]%s (by: %s)",
                 super.toString(),
-                deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+                deadline.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
     }
 }
