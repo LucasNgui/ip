@@ -20,9 +20,6 @@ public class ToDoCommand extends Command {
         super(args, 1);
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage) {
         ToDo toDo = new ToDo(args[0].strip());
@@ -33,9 +30,6 @@ public class ToDoCommand extends Command {
                 + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "todo";

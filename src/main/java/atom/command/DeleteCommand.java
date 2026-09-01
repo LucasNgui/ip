@@ -29,9 +29,6 @@ public class DeleteCommand extends Command {
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage)
             throws AtomTaskNotFoundException {
@@ -43,9 +40,6 @@ public class DeleteCommand extends Command {
                 + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "delete";

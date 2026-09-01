@@ -21,6 +21,7 @@ import atom.task.ToDo;
  * Handles saving and loading data.
  */
 public class Storage {
+    /** The file path of the save file */
     private static final String savePath = "./data/atom.txt";
 
     /**

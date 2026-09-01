@@ -20,18 +20,12 @@ public class ByeCommand extends Command {
         super(args, 0);
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage) {
         Platform.exit();
         return "Bye bye! ('^')/";
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "bye";

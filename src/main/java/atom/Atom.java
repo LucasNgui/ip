@@ -25,6 +25,12 @@ public class Atom {
         parser = new Parser();
     }
 
+    /**
+     * Gets the corresponding response to the input.
+     *
+     * @param input The user input.
+     * @return The output message.
+     */
     public String getResponse(String input) {
         String outputMessage;
         try {
@@ -36,6 +42,11 @@ public class Atom {
         return outputMessage;
     }
 
+    /**
+     * Returns the greeting string.
+     *
+     * @return The greeting string.
+     */
     public String getGreeting() {
         return "Hi, I'm Atom! ('^')/";
     }

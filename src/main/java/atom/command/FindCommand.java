@@ -19,18 +19,12 @@ public class FindCommand extends Command {
         super(args, 1);
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage) {
         return "I've found these matching tasks in your list:\n"
                 + tasks.find(args[0]).toString();
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "find";

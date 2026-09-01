@@ -19,17 +19,11 @@ public class ListCommand extends Command {
         super(args, 0);
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage) {
         return tasks.toString();
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "list";

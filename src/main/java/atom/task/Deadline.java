@@ -10,6 +10,7 @@ import atom.exception.AtomInvalidDateException;
  * Represents a task with a deadline.
  */
 public class Deadline extends Task {
+    /** The due date */
     private final LocalDate deadline;
 
     /**

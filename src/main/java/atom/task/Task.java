@@ -4,7 +4,10 @@ package atom.task;
  * A parent class for tasks.
  */
 public class Task {
+    /** Indicates whether the task is done */
     protected boolean isDone;
+
+    /** The task description */
     protected final String description;
 
     /**

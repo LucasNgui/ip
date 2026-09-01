@@ -9,6 +9,7 @@ import atom.task.TaskList;
  * Contains the arguments to the command.
  */
 public abstract class Command {
+    /** The arguments to the command */
     protected String[] args;
 
     /**

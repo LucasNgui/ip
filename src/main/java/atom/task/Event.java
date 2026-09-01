@@ -10,7 +10,10 @@ import atom.exception.AtomInvalidDateException;
  * Represents a task with a start and end time.
  */
 public class Event extends Task {
+    /** The start time of the event */
     private final LocalDate startTime;
+
+    /** The end time of the event */
     private final LocalDate endTime;
 
     /**

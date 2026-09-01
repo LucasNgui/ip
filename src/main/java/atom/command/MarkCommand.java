@@ -28,9 +28,6 @@ public class MarkCommand extends Command {
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage)
             throws AtomTaskNotFoundException {
@@ -40,9 +37,6 @@ public class MarkCommand extends Command {
         return "Awesome! Marking this task as done:\n" + tasks.get(idx - 1);
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "mark";

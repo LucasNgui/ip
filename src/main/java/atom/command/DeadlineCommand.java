@@ -24,9 +24,6 @@ public class DeadlineCommand extends Command {
         checkDeadlineArgs();
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage) {
         Deadline deadline = new Deadline(args[0].strip(),
@@ -38,9 +35,6 @@ public class DeadlineCommand extends Command {
                 + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "deadline";

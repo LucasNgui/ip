@@ -28,9 +28,6 @@ public class UnmarkCommand extends Command {
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage)
             throws AtomTaskNotFoundException {
@@ -40,9 +37,6 @@ public class UnmarkCommand extends Command {
         return "Ok. Marking this task as undone:\n" + tasks.get(idx - 1);
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "unmark";

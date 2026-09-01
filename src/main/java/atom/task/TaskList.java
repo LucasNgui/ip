@@ -8,6 +8,7 @@ import atom.exception.AtomTaskNotFoundException;
  * A class to store and operate on tasks in a list.
  */
 public class TaskList {
+    /** The list of tasks */
     private final ArrayList<Task> tasks;
 
     /**

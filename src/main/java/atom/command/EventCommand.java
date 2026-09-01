@@ -24,9 +24,6 @@ public class EventCommand extends Command {
         checkEventArgs();
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String execute(TaskList tasks, Storage storage) {
         Event event = new Event(args[0].strip(),
@@ -39,9 +36,6 @@ public class EventCommand extends Command {
                 + String.format("\nYou now have %d tasks in the list.", tasks.size());
     }
 
-    /**
-     * @inheritDoc
-     */
     @Override
     public String getCommandName() {
         return "event";
