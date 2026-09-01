@@ -67,7 +67,7 @@ public class Storage {
                 .map(this::convertLineToTask)
                 .toList();
 
-        return (ArrayList<Task>)loadedTasks;
+        return (ArrayList<Task>) loadedTasks;
     }
 
     /**
@@ -81,18 +81,18 @@ public class Storage {
         Task task;
 
         switch (TaskName.valueOf(splitLine[0])) {
-        case TaskName.T:
-            task = new ToDo(splitLine[2]);
-            break;
-        case TaskName.D:
-            task = new Deadline(splitLine[2], splitLine[3]);
-            break;
-        case TaskName.E:
-            task = new Event(splitLine[2], splitLine[3], splitLine[4]);
-            break;
-        default:
-            assert false : "Invalid save format.";
-            return null;
+            case TaskName.T:
+                task = new ToDo(splitLine[2]);
+                break;
+            case TaskName.D:
+                task = new Deadline(splitLine[2], splitLine[3]);
+                break;
+            case TaskName.E:
+                task = new Event(splitLine[2], splitLine[3], splitLine[4]);
+                break;
+            default:
+                assert false : "Invalid save format.";
+                return null;
         }
 
         if (splitLine[1].equals("1")) {
