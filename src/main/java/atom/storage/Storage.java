@@ -60,7 +60,7 @@ public class Storage {
             lines = Files.readAllLines(path);
         } catch (IOException e) {
             System.out.println("Error in reading from save file.");
-            return null;
+            return new ArrayList<>();
         }
 
         List<Task> loadedTasks = lines.stream()
