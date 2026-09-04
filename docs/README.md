@@ -22,12 +22,12 @@ You now have 1 tasks in the list.
 
 Add a task with only an end time.
 
-Example: `deadline return book /by Sunday`
+Example: `deadline return book /by 2026-04-30`
 
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Alright! I've added this task:
-[D][ ] return book (by: Sunday)
+[D][ ] return book (by: Apr 30 2026)
 You now have 2 tasks in the list.
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
@@ -36,12 +36,12 @@ You now have 2 tasks in the list.
 
 Add a task with both a start time and an end time.
 
-Example: `event project meeting /from Mon 2pm /to 4pm`
+Example: `event project meeting /from 2026-04-14 /to 2026-04-15`
 
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Alright! I've added this task:
-[D][ ] project meeting (from: Mon 2pm to: 4pm)
+[D][ ] project meeting (from: Apr 14 2026 to: Apr 15 2026)
 You now have 3 tasks in the list.
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
@@ -55,8 +55,8 @@ Example: `list`
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: Apr 30 2026)
+3. [E][ ] project meeting (from: Apr 14 2026 to: Apr 15 2026)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``` 
 
@@ -68,9 +68,8 @@ Example: `mark 1`
 
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-1. [T][X] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+Awesome! Marking this task as done:
+[T][X] borrow book
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``` 
 
@@ -78,9 +77,8 @@ Example: `mark 1`
 
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+Ok. Marking this task as undone:
+[T][ ] borrow book
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 
@@ -93,7 +91,20 @@ Example: `delete 2`
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Alright! I've removed this task:
-[D][ ] return book (by: Sunday)
+[D][ ] return book (by: Apr 30 2026)
 You now have 2 tasks in the list.
+~~~~~~~~~~~~~~~~~~~~~~~~~
+``` 
+
+## Finding tasks
+
+Find a task using a keyword.
+
+Example: `find book`
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~
+I've found these matching tasks in your list:
+1. [T][ ] borrow book
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``` 
