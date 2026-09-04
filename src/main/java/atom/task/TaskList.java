@@ -104,7 +104,7 @@ public class TaskList {
      * @throws AtomTaskNotFoundException If the index is out of bounds.
      */
     private void checkTaskIndex(int idx) throws AtomTaskNotFoundException {
-        if (idx < 0 || idx > size()) {
+        if (idx < 0 || idx >= size()) {
             throw new AtomTaskNotFoundException(idx + 1);
         }
     }
