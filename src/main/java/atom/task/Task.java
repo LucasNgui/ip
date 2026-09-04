@@ -3,7 +3,7 @@ package atom.task;
 /**
  * A parent class for tasks.
  */
-public class Task {
+public abstract class Task {
     /** Indicates whether the task is done */
     protected boolean isDone;
 

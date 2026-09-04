@@ -19,7 +19,7 @@ import atom.task.ToDo;
  */
 public class Storage {
     /** The file path of the save file */
-    private static final String savePath = "./data/atom.txt";
+    private static final String SAVE_PATH = "./data/atom.txt";
 
     /**
      * An enum for types of tasks.
@@ -33,7 +33,7 @@ public class Storage {
      * checks if a save file exists and creates one if it does not.
      */
     public Storage() {
-        File file = new File(savePath);
+        File file = new File(SAVE_PATH);
 
         File parentDir = file.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
@@ -53,7 +53,7 @@ public class Storage {
      * @return A <code>TaskList</code> filled with tasks from the loaded data.
      */
     public ArrayList<Task> load() {
-        Path path = Paths.get(savePath);
+        Path path = Paths.get(SAVE_PATH);
         List<String> lines;
 
         try {
@@ -117,7 +117,7 @@ public class Storage {
         sb.append("\n");
 
         try {
-            FileWriter fw = new FileWriter(savePath, true);
+            FileWriter fw = new FileWriter(SAVE_PATH, true);
             fw.write(sb.toString());
             fw.close();
         } catch (IOException e) {
@@ -131,7 +131,7 @@ public class Storage {
      * @param taskIdx The index of the task to be marked.
      */
     public void markTask(int taskIdx) {
-        Path path = Paths.get(savePath);
+        Path path = Paths.get(SAVE_PATH);
         try {
             List<String> lines = Files.readAllLines(path);
             assertValidTask(lines.size(), taskIdx);
@@ -147,12 +147,12 @@ public class Storage {
     }
 
     /**
-     * Marks a task in the save file.
+     * Unmarks a task in the save file.
      *
-     * @param taskIdx The index of the task to be marked.
+     * @param taskIdx The index of the task to be unmarked.
      */
     public void unmarkTask(int taskIdx) {
-        Path path = Paths.get(savePath);
+        Path path = Paths.get(SAVE_PATH);
         try {
             List<String> lines = Files.readAllLines(path);
             assertValidTask(lines.size(), taskIdx);
@@ -173,12 +173,12 @@ public class Storage {
      * @param taskIdx The index of the task to be deleted.
      */
     public void deleteTask(int taskIdx) {
-        Path path = Paths.get(savePath);
+        Path path = Paths.get(SAVE_PATH);
         try {
             List<String> lines = Files.readAllLines(path);
             assertValidTask(lines.size(), taskIdx);
 
-            lines.remove(taskIdx);
+            lines.remove(taskIdx - 1);
 
             Files.write(path, lines);
         } catch (IOException e) {
