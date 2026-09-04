@@ -39,7 +39,7 @@ public class EventCommand extends Command {
                 args[1].strip(),
                 args[2].strip());
         tasks.add(event);
-        storage.writeTask(Storage.TaskName.E, args);
+        storage.writeTask(Storage.TaskType.E, args);
         return getOutputMessage(event.toString(), Integer.toString(tasks.size()));
     }
 

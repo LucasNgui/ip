@@ -88,13 +88,13 @@ public class TaskList {
      * @return A <code>TaskList</code> containing all matching tasks.
      */
     public TaskList find(String keyword) {
-        ArrayList<Task> res = new ArrayList<>();
+        ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task t : tasks) {
             if (t.getDescription().contains(keyword)) {
-                res.add(t);
+                matchingTasks.add(t);
             }
         }
-        return new TaskList(res);
+        return new TaskList(matchingTasks);
     }
 
     /**

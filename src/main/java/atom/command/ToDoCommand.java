@@ -29,7 +29,7 @@ public class ToDoCommand extends Command {
     public String execute(TaskList tasks, Storage storage) {
         ToDo toDo = new ToDo(args[0].strip());
         tasks.add(toDo);
-        storage.writeTask(Storage.TaskName.T, args);
+        storage.writeTask(Storage.TaskType.T, args);
         return getOutputMessage(toDo.toString(), Integer.toString(tasks.size()));
     }
 

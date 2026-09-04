@@ -24,7 +24,7 @@ public class Storage {
     /**
      * An enum for types of tasks.
      */
-    public enum TaskName {
+    public enum TaskType {
         T, D, E
     }
 
@@ -77,25 +77,25 @@ public class Storage {
      * @return The corresponding task.
      */
     private Task convertLineToTask(String line) {
-        String[] splitLine = line.split(" /");
+        String[] lineParts = line.split(" /");
         Task task;
 
-        switch (TaskName.valueOf(splitLine[0])) {
-            case TaskName.T:
-                task = new ToDo(splitLine[2]);
+        switch (TaskType.valueOf(lineParts[0])) {
+            case TaskType.T:
+                task = new ToDo(lineParts[2]);
                 break;
-            case TaskName.D:
-                task = new Deadline(splitLine[2], splitLine[3]);
+            case TaskType.D:
+                task = new Deadline(lineParts[2], lineParts[3]);
                 break;
-            case TaskName.E:
-                task = new Event(splitLine[2], splitLine[3], splitLine[4]);
+            case TaskType.E:
+                task = new Event(lineParts[2], lineParts[3], lineParts[4]);
                 break;
             default:
                 assert false : "Invalid save format.";
                 return null;
         }
 
-        if (splitLine[1].equals("1")) {
+        if (lineParts[1].equals("1")) {
             task.mark();
         }
 
@@ -105,11 +105,11 @@ public class Storage {
     /**
      * Adds a task to the save file.
      *
-     * @param taskName The name of the task.
+     * @param taskType The type of the task.
      * @param args The arguments to the task.
      */
-    public void writeTask(TaskName taskName, String[] args) {
-        StringBuilder sb = new StringBuilder(taskName.toString());
+    public void writeTask(TaskType taskType, String[] args) {
+        StringBuilder sb = new StringBuilder(taskType.toString());
         sb.append(" /0");
         for (String s : args) {
             sb.append(" /").append(s);
@@ -128,17 +128,17 @@ public class Storage {
     /**
      * Marks a task in the save file.
      *
-     * @param taskIdx The index of the task to be marked.
+     * @param taskIndex The index of the task to be marked.
      */
-    public void markTask(int taskIdx) {
+    public void markTask(int taskIndex) {
         Path path = Paths.get(SAVE_PATH);
         try {
             List<String> lines = Files.readAllLines(path);
-            assertValidTask(lines.size(), taskIdx);
+            assertValidTask(lines.size(), taskIndex);
 
-            StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
+            StringBuilder markedTask = new StringBuilder(lines.get(taskIndex - 1));
             markedTask.setCharAt(3, '1');
-            lines.set(taskIdx - 1, markedTask.toString());
+            lines.set(taskIndex - 1, markedTask.toString());
 
             Files.write(path, lines);
         } catch (IOException e) {
@@ -149,17 +149,17 @@ public class Storage {
     /**
      * Unmarks a task in the save file.
      *
-     * @param taskIdx The index of the task to be unmarked.
+     * @param taskIndex The index of the task to be unmarked.
      */
-    public void unmarkTask(int taskIdx) {
+    public void unmarkTask(int taskIndex) {
         Path path = Paths.get(SAVE_PATH);
         try {
             List<String> lines = Files.readAllLines(path);
-            assertValidTask(lines.size(), taskIdx);
+            assertValidTask(lines.size(), taskIndex);
 
-            StringBuilder markedTask = new StringBuilder(lines.get(taskIdx - 1));
+            StringBuilder markedTask = new StringBuilder(lines.get(taskIndex - 1));
             markedTask.setCharAt(3, '0');
-            lines.set(taskIdx - 1, markedTask.toString());
+            lines.set(taskIndex - 1, markedTask.toString());
 
             Files.write(path, lines);
         } catch (IOException e) {
@@ -170,15 +170,15 @@ public class Storage {
     /**
      * Deletes a task in the save file.
      *
-     * @param taskIdx The index of the task to be deleted.
+     * @param taskIndex The index of the task to be deleted.
      */
-    public void deleteTask(int taskIdx) {
+    public void deleteTask(int taskIndex) {
         Path path = Paths.get(SAVE_PATH);
         try {
             List<String> lines = Files.readAllLines(path);
-            assertValidTask(lines.size(), taskIdx);
+            assertValidTask(lines.size(), taskIndex);
 
-            lines.remove(taskIdx - 1);
+            lines.remove(taskIndex - 1);
 
             Files.write(path, lines);
         } catch (IOException e) {
@@ -189,10 +189,10 @@ public class Storage {
     /**
      * Asserts if the provided task index is valid.
      *
-     * @param maxIdx The maximum task index.
-     * @param taskIdx The task index provided.
+     * @param maxTaskIndex The maximum task index.
+     * @param taskIndex The task index provided.
      */
-    private void assertValidTask(int maxIdx, int taskIdx) {
-        assert taskIdx >= 0 && taskIdx < maxIdx : "Task index out of bounds";
+    private void assertValidTask(int maxTaskIndex, int taskIndex) {
+        assert taskIndex >= 0 && taskIndex < maxTaskIndex : "Task index out of bounds";
     }
 }

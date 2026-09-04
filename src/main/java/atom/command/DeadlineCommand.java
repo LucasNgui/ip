@@ -36,7 +36,7 @@ public class DeadlineCommand extends Command {
         Deadline deadline = new Deadline(args[0].strip(),
                 args[1].strip());
         tasks.add(deadline);
-        storage.writeTask(Storage.TaskName.D, args);
+        storage.writeTask(Storage.TaskType.D, args);
         return getOutputMessage(deadline.toString(), Integer.toString(tasks.size()));
     }
 

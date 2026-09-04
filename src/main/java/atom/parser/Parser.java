@@ -68,18 +68,18 @@ public class Parser {
      */
     private Pair<CommandWord, String[]> splitLine(String input)
             throws AtomInvalidCommandException {
-        String[] split = input.strip().split("\\s+", 2);
+        String[] inputParts = input.strip().split("\\s+", 2);
         CommandWord command;
 
         try {
-            command = CommandWord.valueOf(split[0].toUpperCase());
+            command = CommandWord.valueOf(inputParts[0].toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new AtomInvalidCommandException();
         }
 
         String[] args = new String[0];
-        if (split.length > 1) {
-            args = split[1].trim().split(" /");
+        if (inputParts.length > 1) {
+            args = inputParts[1].trim().split(" /");
         }
 
         return new Pair<>(command, args);
