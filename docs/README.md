@@ -62,6 +62,14 @@ Example: `list`
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``` 
 
+## Viewing a schedule
+
+View all deadlines and events occurring on a date.
+
+Example: `schedule 2026-04-14`
+
+Events spanning multiple days appear on each date they cover.
+
 ## Marking and unmarking tasks
 
 Mark a task as done or undone.

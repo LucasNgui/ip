@@ -8,6 +8,7 @@ import atom.command.EventCommand;
 import atom.command.FindCommand;
 import atom.command.ListCommand;
 import atom.command.MarkCommand;
+import atom.command.ScheduleCommand;
 import atom.command.ToDoCommand;
 import atom.command.UnmarkCommand;
 import atom.exception.AtomException;
@@ -29,6 +30,7 @@ public class Parser {
         TODO,
         DEADLINE,
         EVENT,
+        SCHEDULE,
         DELETE,
         FIND
     }
@@ -55,6 +57,7 @@ public class Parser {
             case CommandWord.FIND -> new FindCommand(args);
             case CommandWord.DEADLINE -> new DeadlineCommand(args);
             case CommandWord.EVENT -> new EventCommand(args);
+            case CommandWord.SCHEDULE -> new ScheduleCommand(args);
         };
     }
 

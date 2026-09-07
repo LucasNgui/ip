@@ -47,6 +47,11 @@ public class Deadline extends Task {
         }
     }
 
+    /** @return The date and time of this deadline. */
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
     @Override
     public String toString() {
         return String.format("[D]%s (by: %s)",

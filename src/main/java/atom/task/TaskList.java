@@ -1,6 +1,9 @@
 package atom.task;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import atom.exception.AtomTaskNotFoundException;
 
@@ -95,6 +98,29 @@ public class TaskList {
             }
         }
         return new TaskList(matchingTasks);
+    }
+
+    /** Returns deadlines and events occurring on the given date, in time order. */
+    public TaskList schedule(LocalDate date) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task instanceof Deadline deadline && deadline.getDeadline().toLocalDate().equals(date)) {
+                matchingTasks.add(task);
+            } else if (task instanceof Event event
+                    && !date.isBefore(event.getStartTime().toLocalDate())
+                    && !date.isAfter(event.getEndTime().toLocalDate())) {
+                matchingTasks.add(task);
+            }
+        }
+        matchingTasks.sort(Comparator.comparing(this::scheduledTime));
+        return new TaskList(matchingTasks);
+    }
+
+    private LocalDateTime scheduledTime(Task task) {
+        if (task instanceof Deadline deadline) {
+            return deadline.getDeadline();
+        }
+        return ((Event) task).getStartTime();
     }
 
     /**
