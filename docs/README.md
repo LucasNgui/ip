@@ -22,12 +22,14 @@ You now have 1 tasks in the list.
 
 Add a task with only an end time.
 
-Example: `deadline return book /by 2026-04-30`
+Times use the 24-hour `yyyy-MM-dd HH:mm` format.
+
+Example: `deadline return book /by 2026-04-30 18:00`
 
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Alright! I've added this task:
-[D][ ] return book (by: Apr 30 2026)
+[D][ ] return book (by: Apr 30 2026, 6:00 PM)
 You now have 2 tasks in the list.
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
@@ -36,12 +38,12 @@ You now have 2 tasks in the list.
 
 Add a task with both a start time and an end time.
 
-Example: `event project meeting /from 2026-04-14 /to 2026-04-15`
+Example: `event project meeting /from 2026-04-14 14:00 /to 2026-04-14 16:00`
 
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Alright! I've added this task:
-[D][ ] project meeting (from: Apr 14 2026 to: Apr 15 2026)
+[E][ ] project meeting (from: Apr 14 2026, 2:00 PM to: Apr 14 2026, 4:00 PM)
 You now have 3 tasks in the list.
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
@@ -55,8 +57,8 @@ Example: `list`
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Apr 30 2026)
-3. [E][ ] project meeting (from: Apr 14 2026 to: Apr 15 2026)
+2. [D][ ] return book (by: Apr 30 2026, 6:00 PM)
+3. [E][ ] project meeting (from: Apr 14 2026, 2:00 PM to: Apr 14 2026, 4:00 PM)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``` 
 
@@ -91,7 +93,7 @@ Example: `delete 2`
 ```
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Alright! I've removed this task:
-[D][ ] return book (by: Apr 30 2026)
+[D][ ] return book (by: Apr 30 2026, 6:00 PM)
 You now have 2 tasks in the list.
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``` 

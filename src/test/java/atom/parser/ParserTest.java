@@ -100,17 +100,25 @@ public class ParserTest {
     @Test
     public void readLine_deadline_writtenCorrectly() {
         Parser p = new Parser();
-        Command c = p.readLine("deadline return book /by 2024-10-02");
+        Command c = p.readLine("deadline return book /by 2024-10-02 18:00");
 
-        assertEquals(new DeadlineCommand(new String[]{"return book", "by 2024-10-02"}), c);
+        assertEquals(new DeadlineCommand(new String[]{"return book", "by 2024-10-02 18:00"}), c);
     }
 
     @Test
     public void readLine_event_writtenCorrectly() {
         Parser p = new Parser();
-        Command c = p.readLine("event meeting /from 2pm /to 4pm");
+        Command c = p.readLine("event meeting /from 2024-10-02 14:00 /to 2024-10-02 16:00");
 
-        assertEquals(new EventCommand(new String[]{"meeting", "from 2pm", "to 4pm"}), c);
+        assertEquals(new EventCommand(new String[]{"meeting", "from 2024-10-02 14:00", "to 2024-10-02 16:00"}), c);
+    }
+
+    @Test
+    public void readLine_eventWithTime_writtenCorrectly() {
+        Parser p = new Parser();
+        Command c = p.readLine("event meeting /from 2024-10-02 14:00 /to 2024-10-02 16:00");
+
+        assertEquals(new EventCommand(new String[]{"meeting", "from 2024-10-02 14:00", "to 2024-10-02 16:00"}), c);
     }
 
     @Test

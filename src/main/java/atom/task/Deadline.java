@@ -1,6 +1,8 @@
 package atom.task;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -10,10 +12,12 @@ import atom.exception.AtomInvalidDateException;
  * Represents a task with a deadline.
  */
 public class Deadline extends Task {
-    private static final String DATE_TIME_FORMAT = "MMM d yyyy";
+    private static final String DATE_TIME_FORMAT = "MMM d yyyy, h:mm a";
+    private static final DateTimeFormatter INPUT_FORMAT =
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
 
     /** The due date */
-    private final LocalDate deadline;
+    private final LocalDateTime deadline;
 
     /**
      * Instantiates a <code>Deadline</code> task.
@@ -24,9 +28,22 @@ public class Deadline extends Task {
     public Deadline(String description, String deadline) {
         super(description);
         try {
-            this.deadline = LocalDate.parse(deadline);
+            this.deadline = parseDateTime(deadline);
         } catch (DateTimeParseException e) {
             throw new AtomInvalidDateException();
+        }
+    }
+
+    /**
+     * Parses a timestamp, retaining support for date-only values.
+     *
+     * @param dateTime The date and time arguments.
+     */
+    private static LocalDateTime parseDateTime(String dateTime) {
+        try {
+            return LocalDateTime.parse(dateTime, INPUT_FORMAT);
+        } catch (DateTimeParseException e) {
+            return LocalDate.parse(dateTime).atTime(LocalTime.MIDNIGHT);
         }
     }
 

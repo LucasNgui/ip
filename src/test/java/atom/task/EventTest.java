@@ -8,22 +8,28 @@ public class EventTest {
 
     @Test
     public void mark() {
-        Event markedEvent = new Event("meeting", "2020-10-10", "2020-10-11");
+        Event markedEvent = new Event("meeting", "2020-10-10 14:30", "2020-10-10 16:00");
         markedEvent.mark();
-        assertEquals("[E][X] meeting (from: Oct 10 2020 to: Oct 11 2020)", markedEvent.toString());
+        assertEquals("[E][X] meeting (from: Oct 10 2020, 2:30 PM to: Oct 10 2020, 4:00 PM)", markedEvent.toString());
     }
 
     @Test
     public void unmark() {
-        Event unmarkedEvent = new Event("meeting", "2020-10-10", "2020-10-11");
+        Event unmarkedEvent = new Event("meeting", "2020-10-10 14:30", "2020-10-10 16:00");
         unmarkedEvent.mark();
         unmarkedEvent.unmark();
-        assertEquals("[E][ ] meeting (from: Oct 10 2020 to: Oct 11 2020)", unmarkedEvent.toString());
+        assertEquals("[E][ ] meeting (from: Oct 10 2020, 2:30 PM to: Oct 10 2020, 4:00 PM)", unmarkedEvent.toString());
     }
 
     @Test
     public void testStringConversion() {
-        assertEquals("[E][ ] meeting (from: Oct 10 2020 to: Oct 11 2020)",
-                new Event("meeting", "2020-10-10", "2020-10-11").toString());
+        assertEquals("[E][ ] meeting (from: Oct 10 2020, 2:30 PM to: Oct 10 2020, 4:00 PM)",
+                new Event("meeting", "2020-10-10 14:30", "2020-10-10 16:00").toString());
+    }
+
+    @Test
+    public void testTimeConversion() {
+        assertEquals("[E][ ] meeting (from: Oct 10 2020, 2:30 PM to: Oct 10 2020, 4:00 PM)",
+                new Event("meeting", "2020-10-10 14:30", "2020-10-10 16:00").toString());
     }
 }
