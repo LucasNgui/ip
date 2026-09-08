@@ -63,9 +63,15 @@ public class Storage {
             return new ArrayList<>();
         }
 
-        List<Task> loadedTasks = lines.stream()
-                .map(this::convertLineToTask)
-                .toList();
+        List<Task> loadedTasks = new ArrayList<>();
+        for (String line : lines) {
+            try {
+                loadedTasks.add(convertLineToTask(line));
+            } catch (RuntimeException e) {
+                // Ignore malformed records so one bad line does not prevent startup.
+                System.out.println("Invalid save record detected.");
+            }
+        }
 
         return new ArrayList<>(loadedTasks);
     }
