@@ -1,6 +1,6 @@
 # Atom User Guide
 
-// Product screenshot goes here
+![Atom user interface](Ui.png)
 
 Atom is a chatbot designed to help keep track of tasks.
 
@@ -66,7 +66,7 @@ Example: `list`
 
 View all deadlines and events occurring on a date.
 
-Example: `schedule 2026-04-14`
+    Example: `schedule 2026-04-14`
 
 Events spanning multiple days appear on each date they cover.
 
