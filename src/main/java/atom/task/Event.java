@@ -37,6 +37,9 @@ public class Event extends Task {
         } catch (DateTimeParseException e) {
             throw new AtomInvalidDateException();
         }
+        if (!this.startTime.isBefore(this.endTime)) {
+            throw new AtomInvalidDateException();
+        }
     }
 
     /**

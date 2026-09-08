@@ -1,7 +1,9 @@
 package atom.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import atom.exception.AtomInvalidDateException;
 import org.junit.jupiter.api.Test;
 
 public class EventTest {
@@ -31,5 +33,13 @@ public class EventTest {
     public void testTimeConversion() {
         assertEquals("[E][ ] meeting (from: Oct 10 2020, 2:30 PM to: Oct 10 2020, 4:00 PM)",
                 new Event("meeting", "2020-10-10 14:30", "2020-10-10 16:00").toString());
+    }
+
+    @Test
+    void eventMustEndAfterItStarts() {
+        assertThrows(AtomInvalidDateException.class,
+                () -> new Event("meeting", "2024-02-01 10:00", "2024-02-01 10:00"));
+        assertThrows(AtomInvalidDateException.class,
+                () -> new Event("meeting", "2024-02-02", "2024-02-01"));
     }
 }
