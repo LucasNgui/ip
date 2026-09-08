@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+//@@author LucasNgui-reused
+//Reused from https://se-education.org/guides/tutorials/javaFx.html
+// with minor modifications
 /**
  * A GUI for Atom using FXML.
  */
@@ -39,3 +42,4 @@ public class Main extends Application {
         stage.show();
     }
 }
+//@@author

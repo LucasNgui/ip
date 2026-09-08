@@ -9,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+//@@author LucasNgui-reused
+//Reused from https://se-education.org/guides/tutorials/javaFx.html
+// with minor modifications
 /**
  * Controller for the main GUI.
  */
@@ -64,3 +67,4 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
     }
 }
+//@@author
