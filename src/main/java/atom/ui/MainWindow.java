@@ -54,9 +54,12 @@ public class MainWindow extends AnchorPane {
             return;
         }
         String response = atom.getResponse(input);
+        String responseWithEmoticon = response.startsWith("Oh no!")
+                ? "⚠ " + response
+                : response;
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getAtomDialog(response, atomImage)
+                DialogBox.getAtomDialog(responseWithEmoticon, atomImage)
         );
         userInput.clear();
     }
