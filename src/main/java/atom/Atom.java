@@ -48,6 +48,6 @@ public class Atom {
      * @return The greeting string.
      */
     public String getGreeting() {
-        return "Hi, I'm Atom! ('^')/";
+        return "Hi, I'm Atom! ('^')/ ✨";
     }
 }

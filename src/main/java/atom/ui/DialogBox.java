@@ -75,7 +75,7 @@ public class DialogBox extends HBox {
     public static DialogBox getAtomDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
-        if (text != null && text.startsWith("Oh no!")) {
+        if (text != null && (text.startsWith("Oh no!") || text.startsWith("⚠"))) {
             db.dialog.getStyleClass().add("error-label");
         }
         return db;

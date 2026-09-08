@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class AtomTest {
     @Test
     void greeting_isReturned() {
-        assertEquals("Hi, I'm Atom! ('^')/", new Atom().getGreeting());
+        assertEquals("Hi, I'm Atom! ('^')/ ✨", new Atom().getGreeting());
     }
 
     @Test
