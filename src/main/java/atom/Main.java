@@ -13,8 +13,8 @@ import javafx.stage.Stage;
  * A GUI for Atom using FXML.
  */
 public class Main extends Application {
-    private static final int MIN_STAGE_HEIGHT = 220;
-    private static final int MIN_STAGE_WIDTH = 417;
+    private static final int MIN_STAGE_HEIGHT = 320;
+    private static final int MIN_STAGE_WIDTH = 320;
 
     private final Atom atom = new Atom();
 
@@ -31,6 +31,7 @@ public class Main extends Application {
         }
 
         Scene scene = new Scene(ap);
+        stage.setTitle("Atom");
         stage.setMinHeight(MIN_STAGE_HEIGHT);
         stage.setMinWidth(MIN_STAGE_WIDTH);
         stage.setScene(scene);
