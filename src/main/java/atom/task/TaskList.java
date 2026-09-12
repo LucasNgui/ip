@@ -24,7 +24,7 @@ public class TaskList {
     }
 
     /**
-     * Add a task to the list.
+     * Adds a task to the list.
      *
      * @param task The task to be added.
      */
@@ -33,7 +33,7 @@ public class TaskList {
     }
 
     /**
-     * Remove a task form the list.
+     * Removes a task from the list.
      *
      * @param idx The index of the task to be removed.
      * @return The removed task.
@@ -65,7 +65,7 @@ public class TaskList {
     }
 
     /**
-     * Retrieve a task by index.
+     * Retrieves a task by index.
      *
      * @param idx The index of the task to be retrieved.
      * @return The retrieved task.
