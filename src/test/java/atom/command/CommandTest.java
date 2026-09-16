@@ -17,6 +17,7 @@ import atom.exception.AtomInvalidTypeException;
 import atom.exception.AtomMismatchedArgumentsException;
 import atom.storage.Storage;
 import atom.task.TaskList;
+import atom.task.ToDo;
 
 class CommandTest {
     private static final Path SAVE_FILE = Paths.get("./data/atom.txt");
@@ -55,8 +56,35 @@ class CommandTest {
     @Test
     void schedule_rejectsInvalidDate() {
         TaskList tasks = new TaskList(new ArrayList<>());
-        assertThrows(AtomInvalidDateException.class, () ->
+        AtomInvalidDateException exception = assertThrows(AtomInvalidDateException.class, () ->
                 new ScheduleCommand("not-a-date").execute(tasks, new Storage()));
+        assertEquals("Oh no! Invalid date provided. Please use yyyy-MM-dd or yyyy-MM-dd HH:mm.",
+                exception.getMessage());
+    }
+
+    @Test
+    void list_displaysIntroductoryMessage() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(new ToDo("read book"));
+
+        assertEquals("Here are the tasks in your list:\n1. [T][ ] read book",
+                new ListCommand().execute(tasks, new Storage()));
+    }
+
+    @Test
+    void list_displaysDifferentMessageWhenEmpty() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+
+        assertEquals("There are no tasks in your list.",
+                new ListCommand().execute(tasks, new Storage()));
+    }
+
+    @Test
+    void find_displaysDifferentMessageWhenThereAreNoResults() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+
+        assertEquals("There are no matching tasks in your list.",
+                new FindCommand("read").execute(tasks, new Storage()));
     }
 
     @Test

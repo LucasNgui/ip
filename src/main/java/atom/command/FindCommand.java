@@ -37,6 +37,9 @@ public class FindCommand extends Command {
     @Override
     protected String getOutputMessage(String ... outputArgs) {
         assertArgumentsLength(getCommandName(), EXPECTED_OUTPUT_ARGUMENTS, outputArgs.length);
+        if (outputArgs[0].isEmpty()) {
+            return "There are no matching tasks in your list.";
+        }
         return "I've found these matching tasks in your list:\n"
                 + outputArgs[0];
     }
