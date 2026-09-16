@@ -5,7 +5,7 @@ Atom is a chatbot designed to help keep track of tasks.
 ## Getting Started
 
 1. Ensure that you have Java 25 installed. You can check this by running `java -version` in the terminal.
-2. Download `Atom.jar`.
+2. Download `Atom.jar` from the [latest release](https://github.com/LucasNgui/ip/releases/download/A-Release/Atom.jar).
 3. Move the file into a new folder.
 4. Run `java -jar "Atom.jar"`.
 
