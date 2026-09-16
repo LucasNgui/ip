@@ -1,8 +1,13 @@
 # Atom User Guide
 
-![Atom user interface](Ui.png)
-
 Atom is a chatbot designed to help keep track of tasks.
+
+## Getting Started
+
+1. Ensure that you have Java 25 installed. You can check this by running `java -version` in the terminal.
+2. Download `Atom.jar`.
+3. Move the file into a new folder.
+4. Run `java -jar "Atom.jar"`.
 
 ## Adding todos
 
@@ -49,6 +54,7 @@ List all tasks that have been added so far.
 Example: `list`
 
 ```
+Here are the tasks in your list:
 1. [T][ ] borrow book
 2. [D][ ] return book (by: Apr 30 2026, 6:00 PM)
 3. [E][ ] project meeting (from: Apr 14 2026, 2:00 PM to: Apr 14 2026, 4:00 PM)
