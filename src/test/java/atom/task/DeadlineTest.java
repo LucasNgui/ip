@@ -1,8 +1,11 @@
 package atom.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
+import atom.exception.AtomInvalidDateException;
 
 public class DeadlineTest {
 
@@ -31,5 +34,15 @@ public class DeadlineTest {
     public void testTimeConversion() {
         assertEquals("[D][ ] return book (by: Oct 10 2020, 6:30 PM)",
                 new Deadline("return book", "2020-10-10 18:30").toString());
+    }
+
+    @Test
+    void rejectsImpossibleDates() {
+        assertThrows(AtomInvalidDateException.class, () ->
+                new Deadline("submit report", "2024-02-30"));
+        assertThrows(AtomInvalidDateException.class, () ->
+                new Deadline("submit report", "2023-02-29 09:00"));
+        assertThrows(AtomInvalidDateException.class, () ->
+                new Deadline("submit report", "2026-09-31"));
     }
 }

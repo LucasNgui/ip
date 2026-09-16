@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import atom.exception.AtomInvalidDateException;
 
@@ -14,7 +15,8 @@ import atom.exception.AtomInvalidDateException;
 public class Event extends Task {
     private static final String DATE_TIME_FORMAT = "MMM d yyyy, h:mm a";
     private static final DateTimeFormatter INPUT_FORMAT =
-            DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
+                    .withResolverStyle(ResolverStyle.STRICT);
 
     /** The start time of the event */
     private final LocalDateTime startTime;

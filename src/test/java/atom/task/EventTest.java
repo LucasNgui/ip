@@ -43,4 +43,12 @@ public class EventTest {
         assertThrows(AtomInvalidDateException.class, () ->
                 new Event("meeting", "2024-02-02", "2024-02-01"));
     }
+
+    @Test
+    void rejectsImpossibleDates() {
+        assertThrows(AtomInvalidDateException.class, () ->
+                new Event("meeting", "2024-02-30 10:00", "2024-02-30 11:00"));
+        assertThrows(AtomInvalidDateException.class, () ->
+                new Event("meeting", "2026-09-31 10:00", "2026-10-01 11:00"));
+    }
 }
