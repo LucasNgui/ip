@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
+import atom.exception.AtomImpossibleDateException;
 import atom.exception.AtomInvalidDateException;
 
 /**
@@ -45,7 +46,24 @@ public class Deadline extends Task {
         try {
             return LocalDateTime.parse(dateTime, INPUT_FORMAT);
         } catch (DateTimeParseException e) {
+            return parseDateOnly(dateTime);
+        }
+    }
+
+    /**
+     * Parses a date-only input and provides a specific error for impossible dates.
+     *
+     * @param dateTime The date input.
+     * @return The parsed date at midnight.
+     */
+    private static LocalDateTime parseDateOnly(String dateTime) {
+        try {
             return LocalDate.parse(dateTime).atTime(LocalTime.MIDNIGHT);
+        } catch (DateTimeParseException e) {
+            if (dateTime.matches("\\d{4}-\\d{2}-\\d{2}( \\d{2}:\\d{2})?")) {
+                throw new AtomImpossibleDateException();
+            }
+            throw new AtomInvalidDateException();
         }
     }
 

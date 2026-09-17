@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import atom.exception.AtomInvalidDateException;
+import atom.exception.AtomImpossibleDateException;
 
 public class DeadlineTest {
 
@@ -38,11 +38,13 @@ public class DeadlineTest {
 
     @Test
     void rejectsImpossibleDates() {
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomImpossibleDateException.class, () ->
                 new Deadline("submit report", "2024-02-30"));
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomImpossibleDateException.class, () ->
                 new Deadline("submit report", "2023-02-29 09:00"));
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomImpossibleDateException.class, () ->
                 new Deadline("submit report", "2026-09-31"));
+        assertThrows(AtomImpossibleDateException.class, () ->
+                new Deadline("submit report", "2026-01-33"));
     }
 }

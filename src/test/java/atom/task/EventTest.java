@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import atom.exception.AtomInvalidDateException;
+import atom.exception.AtomImpossibleDateException;
+import atom.exception.AtomInvalidEventTimeException;
 
 public class EventTest {
 
@@ -38,17 +39,38 @@ public class EventTest {
 
     @Test
     void eventMustEndAfterItStarts() {
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomInvalidEventTimeException.class, () ->
                 new Event("meeting", "2024-02-01 10:00", "2024-02-01 10:00"));
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomInvalidEventTimeException.class, () ->
                 new Event("meeting", "2024-02-02", "2024-02-01"));
     }
 
     @Test
+    void eventWithEndBeforeStart_hasSpecificErrorMessage() {
+        AtomInvalidEventTimeException exception = assertThrows(AtomInvalidEventTimeException.class, () ->
+                new Event("meeting", "2024-02-02", "2024-02-01"));
+        assertEquals("Oh no! The end time must be after the start time.", exception.getMessage());
+    }
+
+    @Test
     void rejectsImpossibleDates() {
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomImpossibleDateException.class, () ->
                 new Event("meeting", "2024-02-30 10:00", "2024-02-30 11:00"));
-        assertThrows(AtomInvalidDateException.class, () ->
+        assertThrows(AtomImpossibleDateException.class, () ->
                 new Event("meeting", "2026-09-31 10:00", "2026-10-01 11:00"));
+    }
+
+    @Test
+    void impossibleDate_hasSpecificErrorMessage() {
+        AtomImpossibleDateException exception = assertThrows(AtomImpossibleDateException.class, () ->
+                new Event("meeting", "2026-09-31", "2026-10-01"));
+        assertEquals("Oh no! That date does not exist. Please enter a valid calendar date.",
+                exception.getMessage());
+    }
+
+    @Test
+    void dateWithThirtyThirdDay_isRejectedAsImpossibleDate() {
+        assertThrows(AtomImpossibleDateException.class, () ->
+                new Event("meeting", "2026-01-33", "2026-02-01"));
     }
 }

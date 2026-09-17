@@ -7,7 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
+import atom.exception.AtomException;
+import atom.exception.AtomImpossibleDateException;
 import atom.exception.AtomInvalidDateException;
+import atom.exception.AtomInvalidEventTimeException;
 
 /**
  * Represents a task with a start and end time.
@@ -40,7 +43,7 @@ public class Event extends Task {
             throw new AtomInvalidDateException();
         }
         if (!this.startTime.isBefore(this.endTime)) {
-            throw new AtomInvalidDateException();
+            throw new AtomInvalidEventTimeException();
         }
     }
 
@@ -53,8 +56,35 @@ public class Event extends Task {
         try {
             return LocalDateTime.parse(dateTime, INPUT_FORMAT);
         } catch (DateTimeParseException e) {
-            return LocalDate.parse(dateTime).atTime(LocalTime.MIDNIGHT);
+            return parseDateOnly(dateTime);
         }
+    }
+
+    /**
+     * Parses a date-only input and provides a specific error for impossible dates.
+     *
+     * @param dateTime The date input.
+     * @return The parsed date at midnight.
+     */
+    private static LocalDateTime parseDateOnly(String dateTime) {
+        try {
+            return LocalDate.parse(dateTime).atTime(LocalTime.MIDNIGHT);
+        } catch (DateTimeParseException e) {
+            throw getDateParseException(dateTime);
+        }
+    }
+
+    /**
+     * Creates the appropriate exception for an invalid date input.
+     *
+     * @param dateTime The invalid date input.
+     * @return The appropriate date parsing exception.
+     */
+    private static AtomException getDateParseException(String dateTime) {
+        if (dateTime.matches("\\d{4}-\\d{2}-\\d{2}( \\d{2}:\\d{2})?")) {
+            return new AtomImpossibleDateException();
+        }
+        return new AtomInvalidDateException();
     }
 
     /** @return The start date and time of this event. */
