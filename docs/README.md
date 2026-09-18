@@ -2,6 +2,8 @@
 
 Atom is a chatbot designed to help keep track of tasks.
 
+![Atom user interface](Ui.png)
+
 ## Getting Started
 
 1. Ensure that you have Java 25 installed. You can check this by running `java -version` in the terminal.
