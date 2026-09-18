@@ -112,4 +112,19 @@ Example: `find book`
 ```
 I've found these matching tasks in your list:
 1. [T][ ] borrow book
-``` 
+```
+
+## Command summary
+
+| Command | Format | Description |
+| --- | --- | --- |
+| Add todo | `todo <description>` | Adds a task without a date or time. |
+| Add deadline | `deadline <description> /by <yyyy-MM-dd HH:mm>` | Adds a task with an end time. |
+| Add event | `event <description> /from <yyyy-MM-dd HH:mm> /to <yyyy-MM-dd HH:mm>` | Adds a task with a start and end time. |
+| List tasks | `list` | Shows all tasks. |
+| View schedule | `schedule <yyyy-MM-dd>` | Shows deadlines and events occurring on a date. |
+| Mark task | `mark <index>` | Marks a task as done. |
+| Unmark task | `unmark <index>` | Marks a task as undone. |
+| Delete task | `delete <index>` | Deletes a task. |
+| Find tasks | `find <keyword>` | Shows tasks whose descriptions contain the keyword. |
+| Exit Atom | `bye` | Closes the application. |
